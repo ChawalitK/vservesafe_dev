@@ -1,5 +1,5 @@
 <?php
-class DBController {
+class Database {
     private $host = "localhost";
     private $user = "root";
     private $password = "!QAZxsw2#";

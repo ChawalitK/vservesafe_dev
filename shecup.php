@@ -15,12 +15,13 @@
     <link rel="icon" href="./favicon.ico" type="image/x-icon"/>
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon"/>
     <!-- CSS files -->
-    <link href="./dist/css/tabler.min.css?1695847769" rel="stylesheet"/>
-    <link href="./dist/css/tabler-flags.min.css?1695847769" rel="stylesheet"/>
-    <link href="./dist/css/tabler-payments.min.css?1695847769" rel="stylesheet"/>
-    <link href="./dist/css/tabler-vendors.min.css?1695847769" rel="stylesheet"/>
-    <link href="./dist/css/demo.min.css?1695847769" rel="stylesheet"/>
-    <style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap" rel="stylesheet">
+
+    <link href="css/vservesafe.min.css?1695847769" rel="stylesheet"/>
+    <!-- <style>
       @import url('https://rsms.me/inter/inter.css');
       :root {
       	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
@@ -28,10 +29,11 @@
       body {
       	font-feature-settings: "cv03", "cv04", "cv11";
       }
-    </style>
+    </style> -->
+
   </head>
   <body >
-    <script src="./dist/js/demo-theme.min.js?1695847769"></script>
+    <script src="js/demo-theme.min.js?1695847769"></script>
     <div class="page">
       <!-- Navbar -->
       <header class="navbar navbar-expand-md d-print-none" >
@@ -41,7 +43,7 @@
           </button>
           <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
             <a href=".">
-              <img src="./static/logo.svg" width="110" height="32" alt="Tabler" class="navbar-brand-image">
+              <img src="./static/logo.png" width="110" height="32" alt="Tabler" class="navbar-brand-image">
             </a>
           </h1>
           <div class="navbar-nav flex-row order-md-last">
@@ -581,7 +583,7 @@
                   Overview
                 </div>
                 <h2 class="page-title">
-                  Condensed layout
+                  Condensed layout ภาษาไทย
                 </h2>
               </div>
               <!-- Page title actions -->
@@ -612,7 +614,7 @@
             <div class="empty">
               <div class="empty-img"><img src="./static/illustrations/undraw_printing_invoices_5r4r.svg" height="128" alt="">
               </div>
-              <p class="empty-title">No results found</p>
+              <p class="empty-title">No checklists found</p>
               <p class="empty-subtitle text-secondary">
                 Try adjusting your search or filter to find what you're looking for.
               </p>
@@ -620,7 +622,7 @@
                 <a href="./." class="btn btn-primary">
                   <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                  Add your first client
+                  Add your first checklist
                 </a>
               </div>
             </div>
@@ -765,13 +767,13 @@
       </div>
     </div>
     <!-- Libs JS -->
-    <script src="./dist/libs/apexcharts/dist/apexcharts.min.js?1695847769" defer></script>
-    <script src="./dist/libs/jsvectormap/dist/js/jsvectormap.min.js?1695847769" defer></script>
-    <script src="./dist/libs/jsvectormap/dist/maps/world.js?1695847769" defer></script>
-    <script src="./dist/libs/jsvectormap/dist/maps/world-merc.js?1695847769" defer></script>
+    <script src="libs/apexcharts/dist/apexcharts.min.js?1695847769" defer></script>
+    <script src="libs/jsvectormap/dist/js/jsvectormap.min.js?1695847769" defer></script>
+    <script src="libs/jsvectormap/dist/maps/world.js?1695847769" defer></script>
+    <script src="libs/jsvectormap/dist/maps/world-merc.js?1695847769" defer></script>
     <!-- Tabler Core -->
-    <script src="./dist/js/tabler.min.js?1695847769" defer></script>
-    <script src="./dist/js/demo.min.js?1695847769" defer></script>
+    <script src="js/tabler.min.js?1695847769" defer></script>
+    <script src="js/demo.min.js?1695847769" defer></script>
     <script>
       // @formatter:off
       document.addEventListener("DOMContentLoaded", function () {
