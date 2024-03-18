@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 17, 2024 at 06:53 PM
+-- Generation Time: Mar 18, 2024 at 07:34 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.29
 
@@ -183,23 +183,23 @@ INSERT INTO `new_customer` (`customer_id`, `store_id`, `first_name`, `last_name`
 --
 
 CREATE TABLE `profiles` (
-  `id` int(11) NOT NULL,
+  `profile_id` int(11) NOT NULL,
   `site_id` int(6) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `firstname` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lastname` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created` datetime DEFAULT current_timestamp()
+  `profile_firstname` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `profile_lastname` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `profile_lang` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `profile_created` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `profiles`
 --
 
-INSERT INTO `profiles` (`id`, `site_id`, `user_id`, `firstname`, `lastname`, `email`, `created`) VALUES
-(1, 1, 1, 'Chawalit', 'Kiatmanaroj', 'chawalit.ki@gmail.com', '2024-01-23 22:51:58'),
-(2, 2, 2, 'Sasikarn', 'Jongsook', 'sasikarn.jongsook@hotmail.com 	', '2024-01-23 22:55:38'),
-(3, 3, 3, '帕特博士', 'Dansai', 'drpatt@hotmail.com', '2024-01-24 20:19:50');
+INSERT INTO `profiles` (`profile_id`, `site_id`, `user_id`, `profile_firstname`, `profile_lastname`, `profile_lang`, `profile_created`) VALUES
+(1, 1, 1, 'Chawalit', 'Kiatmanaroj', 'en', '2024-01-23 22:51:58'),
+(2, 2, 2, 'Sasikarn', 'Jongsook', 'en', '2024-01-23 22:55:38'),
+(3, 3, 3, '帕特博士', 'Dansai', 'en', '2024-01-24 20:19:50');
 
 -- --------------------------------------------------------
 
@@ -427,36 +427,37 @@ DELIMITER ;
 
 CREATE TABLE `shecup_fsms_audit` (
   `id` int(11) NOT NULL,
-  `company_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `site_id` int(11) NOT NULL,
+  `audit_referance` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `audit_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `audit_type` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `name_keyin` varchar(60) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `name_audit` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `audit_name` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
   `total_score` decimal(6,2) NOT NULL DEFAULT 0.00,
   `total_point` decimal(6,2) NOT NULL DEFAULT 0.00,
   `total_answer` int(3) NOT NULL DEFAULT 0,
   `total_na` int(3) NOT NULL DEFAULT 0,
   `additional` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `audit_created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `audit_updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `shecup_fsms_audit`
 --
 
-INSERT INTO `shecup_fsms_audit` (`id`, `company_id`, `audit_date`, `audit_type`, `name_keyin`, `name_audit`, `total_score`, `total_point`, `total_answer`, `total_na`, `additional`, `created`, `updated`) VALUES
-(1, 1, '2024-03-12 18:21:20', '', 'Chawalit Kiatmanaroj', 'Sasikarn Jongsook', '8.00', '5.00', 0, 0, NULL, '2024-03-04 16:02:05', '2024-03-13 11:51:47'),
-(2, 1, '2024-03-12 18:21:20', '', 'James Lucas', 'Albert Einstein', '0.00', '0.00', 0, 0, NULL, '2024-03-04 16:02:05', '2024-03-13 11:51:49'),
-(3, 1, '2024-03-11 18:37:37', 'internal', NULL, 'Sasikarn Jongsook', '0.00', '0.00', 0, 0, 'cdcdscdscds', '2024-03-12 18:37:37', '2024-03-13 11:51:53'),
-(4, 1, '2024-03-13 11:36:57', 'internal', NULL, 'Sasikarn Jongsook', '0.00', '0.00', 0, 0, 'ทดสอบ 2', '2024-03-13 11:36:57', '2024-03-13 11:51:57'),
-(5, 1, '2024-03-13 11:41:46', 'internal', NULL, 'Sasikarn Jongsook', '8.00', '8.00', 0, 0, 'xxx', '2024-03-13 11:41:46', '2024-03-13 11:52:01'),
-(6, 1, '2024-03-13 11:48:41', 'Internal', NULL, 'Sasikarn Jongsook', '0.00', '0.00', 0, 0, 'test5', '2024-03-13 11:48:41', '2024-03-13 11:52:05'),
-(7, 1, '2024-03-13 11:58:50', 'Internal', NULL, 'Sasikarn Jongsook', '59.00', '46.00', 19, 2, 'cdcdcdcd', '2024-03-13 11:58:50', '2024-03-13 12:01:51'),
-(8, 1, '2024-03-13 12:06:49', 'Internal', NULL, 'Chawalit Kiatmanaroj', '19.00', '16.00', 21, 14, 'ทดสอบอ๋อง', '2024-03-13 12:06:49', '2024-03-13 12:13:01'),
-(9, 1, '2024-03-13 12:13:47', 'Internal', NULL, 'Chawalit Kiatmanaroj', '64.00', '58.00', 20, 13, 'ทดสอบ cccccc', '2024-03-13 12:13:47', '2024-03-13 12:19:42'),
-(10, 1, '2024-03-13 13:24:20', 'Internal', NULL, 'Sasikarn Jongsook', '33.00', '26.00', 11, 2, 'test555', '2024-03-13 13:24:20', '2024-03-13 13:25:35'),
-(11, 1, '2024-03-13 13:46:20', 'Internal', NULL, 'Sasikarn Jongsook', '0.00', '0.00', 0, 0, 'cdcdcd', '2024-03-13 13:46:20', '2024-03-13 13:46:20');
+INSERT INTO `shecup_fsms_audit` (`id`, `user_id`, `site_id`, `audit_referance`, `audit_date`, `audit_type`, `audit_name`, `total_score`, `total_point`, `total_answer`, `total_na`, `additional`, `audit_created`, `audit_updated`) VALUES
+(1, 0, 1, '', '2024-03-12 18:21:20', '', 'Sasikarn Jongsook', '8.00', '5.00', 0, 0, NULL, '2024-03-04 16:02:05', '2024-03-13 11:51:47'),
+(2, 0, 1, '', '2024-03-12 18:21:20', '', 'Albert Einstein', '0.00', '0.00', 0, 0, NULL, '2024-03-04 16:02:05', '2024-03-13 11:51:49'),
+(3, 0, 1, '', '2024-03-11 18:37:37', 'internal', 'Sasikarn Jongsook', '0.00', '0.00', 0, 0, 'cdcdscdscds', '2024-03-12 18:37:37', '2024-03-13 11:51:53'),
+(4, 0, 1, '', '2024-03-13 11:36:57', 'internal', 'Sasikarn Jongsook', '0.00', '0.00', 0, 0, 'ทดสอบ 2', '2024-03-13 11:36:57', '2024-03-13 11:51:57'),
+(5, 0, 1, '', '2024-03-13 11:41:46', 'internal', 'Sasikarn Jongsook', '8.00', '8.00', 0, 0, 'xxx', '2024-03-13 11:41:46', '2024-03-13 11:52:01'),
+(6, 0, 1, '', '2024-03-13 11:48:41', 'Internal', 'Sasikarn Jongsook', '0.00', '0.00', 0, 0, 'test5', '2024-03-13 11:48:41', '2024-03-13 11:52:05'),
+(7, 0, 1, '', '2024-03-13 11:58:50', 'Internal', 'Sasikarn Jongsook', '59.00', '46.00', 19, 2, 'cdcdcdcd', '2024-03-13 11:58:50', '2024-03-13 12:01:51'),
+(8, 0, 1, '', '2024-03-13 12:06:49', 'Internal', 'Chawalit Kiatmanaroj', '19.00', '16.00', 21, 14, 'ทดสอบอ๋อง', '2024-03-13 12:06:49', '2024-03-13 12:13:01'),
+(9, 0, 1, '', '2024-03-13 12:13:47', 'Internal', 'Chawalit Kiatmanaroj', '64.00', '58.00', 20, 13, 'ทดสอบ cccccc', '2024-03-13 12:13:47', '2024-03-13 12:19:42'),
+(10, 0, 1, '', '2024-03-13 13:24:20', 'Internal', 'Sasikarn Jongsook', '33.00', '26.00', 11, 2, 'test555', '2024-03-13 13:24:20', '2024-03-13 13:25:35'),
+(11, 0, 1, '', '2024-03-13 13:46:20', 'Internal', 'Sasikarn Jongsook', '0.00', '0.00', 0, 0, 'cdcdcd', '2024-03-13 13:46:20', '2024-03-13 13:46:20');
 
 -- --------------------------------------------------------
 
@@ -703,26 +704,26 @@ CREATE TABLE `shedein_receiving_inspection` (
 --
 
 CREATE TABLE `sites` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `logo` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_active` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created` timestamp NULL DEFAULT current_timestamp(),
-  `updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `site_id` int(11) NOT NULL,
+  `site_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `site_logo` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `site_active` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `site_created` timestamp NULL DEFAULT current_timestamp(),
+  `site_updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `sites`
 --
 
-INSERT INTO `sites` (`id`, `name`, `logo`, `is_active`, `created`, `updated`) VALUES
-(1, 'AMARI PATTAYA', '', '', '2024-02-01 11:52:52', '2024-02-01 11:52:52'),
-(2, 'Hyatt Regency Phuket Resort', '', '', '2024-02-01 11:53:20', '2024-02-01 11:53:20'),
-(3, 'BANYAN TREE SAMUI', '', '', '2024-02-01 11:53:56', '2024-02-01 11:53:56'),
-(4, 'Thavorn Beach Village Resort & Spa Phuket', '', '', '2024-02-01 11:54:12', '2024-02-01 11:54:12'),
-(5, 'Amani Café', '', '', '2024-02-01 11:54:25', '2024-02-01 11:54:25'),
-(6, 'Oxy Café', '', '', '2024-02-01 11:54:33', '2024-02-01 11:54:33'),
-(7, 'Once Eatery by Pratueang', '', '', '2024-02-01 11:54:53', '2024-02-01 11:54:53');
+INSERT INTO `sites` (`site_id`, `site_name`, `site_logo`, `site_active`, `site_created`, `site_updated`) VALUES
+(1, 'AMARI PATTAYA', '', 'Y', '2024-02-01 11:52:52', '2024-03-18 13:14:31'),
+(2, 'Hyatt Regency Phuket Resort', '', 'Y', '2024-02-01 11:53:20', '2024-03-18 13:14:33'),
+(3, 'BANYAN TREE SAMUI', '', 'Y', '2024-02-01 11:53:56', '2024-03-18 13:14:39'),
+(4, 'Thavorn Beach Village Resort & Spa Phuket', '', 'Y', '2024-02-01 11:54:12', '2024-03-18 13:14:41'),
+(5, 'Amani Café', '', 'Y', '2024-02-01 11:54:25', '2024-03-18 13:14:44'),
+(6, 'Oxy Café', '', 'Y', '2024-02-01 11:54:33', '2024-03-18 13:14:46'),
+(7, 'Once Eatery by Pratueang', '', 'Y', '2024-02-01 11:54:53', '2024-03-18 13:14:48');
 
 -- --------------------------------------------------------
 
@@ -759,24 +760,25 @@ INSERT INTO `suppliers` (`id`, `name`, `logo`, `is_active`, `created`, `updated`
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `username` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_active` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_locked` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `updated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
-  `created` timestamp NULL DEFAULT current_timestamp()
+  `user_email` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_role` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_active` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_locked` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_updated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
+  `user_created` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `email`, `is_active`, `is_locked`, `updated`, `created`) VALUES
-(1, 'superong', '*04C7F5153E5A8E8AFF512D6EB0815B61A0151AB2', 'chawalit.ki@gmail.com', 'y', 'n', '0000-00-00 00:00:00', '2024-01-23 15:25:15'),
-(2, 'penguinoum', '*04C7F5153E5A8E8AFF512D6EB0815B61A0151AB2', 'sasikarn.jongsook@hotmail.com', 'Y', 'N', '0000-00-00 00:00:00', '2024-01-23 15:54:39'),
-(3, 'drpatt', '*E8BA89DE8C20DF8E3BB78B74708B474F63B9AA49', 'drpatt@hotmail.com', 'Y', 'N', '0000-00-00 00:00:00', '2024-01-24 13:18:33');
+INSERT INTO `users` (`user_id`, `username`, `password`, `user_email`, `user_role`, `user_active`, `user_locked`, `user_updated`, `user_created`) VALUES
+(1, 'superong', '*04C7F5153E5A8E8AFF512D6EB0815B61A0151AB2', 'chawalit.ki@gmail.com', 'user', 'Y', 'N', '2024-03-18 13:29:51', '2024-01-23 15:25:15'),
+(2, 'penguinoum', '*04C7F5153E5A8E8AFF512D6EB0815B61A0151AB2', 'sasikarn.jongsook@hotmail.com', 'audit', 'Y', 'N', '2024-03-18 13:29:57', '2024-01-23 15:54:39'),
+(3, 'drpatt', '*E8BA89DE8C20DF8E3BB78B74708B474F63B9AA49', 'drpatt@hotmail.com', 'admin', 'Y', 'N', '2024-03-18 13:30:01', '2024-01-24 13:18:33');
 
 --
 -- Indexes for dumped tables
@@ -812,7 +814,7 @@ ALTER TABLE `new_customer`
 -- Indexes for table `profiles`
 --
 ALTER TABLE `profiles`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`profile_id`);
 
 --
 -- Indexes for table `rel_approve_line`
@@ -880,7 +882,7 @@ ALTER TABLE `shedein_receiving_inspection`
 -- Indexes for table `sites`
 --
 ALTER TABLE `sites`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`site_id`);
 
 --
 -- Indexes for table `suppliers`
@@ -892,7 +894,7 @@ ALTER TABLE `suppliers`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`user_id`),
   ADD UNIQUE KEY `username` (`username`);
 
 --
@@ -927,7 +929,7 @@ ALTER TABLE `new_customer`
 -- AUTO_INCREMENT for table `profiles`
 --
 ALTER TABLE `profiles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `profile_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `rel_approve_line`
@@ -963,7 +965,7 @@ ALTER TABLE `shecup_fsms_answers`
 -- AUTO_INCREMENT for table `shecup_fsms_audit`
 --
 ALTER TABLE `shecup_fsms_audit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20240000;
 
 --
 -- AUTO_INCREMENT for table `shecup_fsms_question`
@@ -987,7 +989,7 @@ ALTER TABLE `shedein_receiving_inspection`
 -- AUTO_INCREMENT for table `sites`
 --
 ALTER TABLE `sites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `site_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `suppliers`
@@ -999,7 +1001,7 @@ ALTER TABLE `suppliers`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

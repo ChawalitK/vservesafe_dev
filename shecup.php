@@ -1,4 +1,16 @@
-<!doctype html>
+<?
+session_start();
+if((!isset($_SESSION['user_id'])) && (!isset($_SESSION['user_email']))){
+  header("location:login.php");
+}
+
+if((isset($_POST['site_id'])) && (isset($_SESSION['audit_type']))){
+  print_r($_POST);
+}
+
+
+?>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
@@ -15,25 +27,13 @@
     <link rel="icon" href="./favicon.ico" type="image/x-icon"/>
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon"/>
     <!-- CSS files -->
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap" rel="stylesheet">
-
     <link href="css/vservesafe.min.css?1695847769" rel="stylesheet"/>
-    <!-- <style>
-      @import url('https://rsms.me/inter/inter.css');
-      :root {
-      	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
-      }
-      body {
-      	font-feature-settings: "cv03", "cv04", "cv11";
-      }
-    </style> -->
 
   </head>
   <body >
-    <script src="js/demo-theme.min.js?1695847769"></script>
     <div class="page">
       <!-- Navbar -->
       <header class="navbar navbar-expand-md d-print-none" >
@@ -47,6 +47,18 @@
             </a>
           </h1>
           <div class="navbar-nav flex-row order-md-last">
+
+          <div class="nav-item dropdown">
+
+            <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="post" id="myForm" style="margin-bottom:0px;padding-right:15px;">
+            <select id="myDropdown" class="form-select w-auto" name="lang" onchange="myFunction()">
+                <option value="th" <?php if($_SESSION['profile_lang'] == 'th'){echo "selected";}?>>TH</option>
+                <option value="en" <?php if($_SESSION['profile_lang'] == 'en'){echo "selected";}?>>EN</option>
+              </select>
+            </form>
+
+         </div>
+
             <div class="d-none d-md-flex">
               <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode" data-bs-toggle="tooltip"
 		   data-bs-placement="bottom">
@@ -164,397 +176,124 @@
           <div class="collapse navbar-collapse" id="navbar-menu">
             <div class="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center">
               <ul class="navbar-nav">
-                <li class="nav-item">
-                  <a class="nav-link" href="./" >
-                    <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
+              <li class="nav-item">
+                  <a class="nav-link" href="home.php">
+                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                      <!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+                        <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+                        <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                      </svg>
                     </span>
-                    <span class="nav-link-title">
+                    <span class="nav-link-title nav-link-custom">
                       Home
                     </span>
                   </a>
                 </li>
                 <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
-                    <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" /><path d="M12 12l8 -4.5" /><path d="M12 12l0 9" /><path d="M12 12l-8 -4.5" /><path d="M16 5.25l-8 4.5" /></svg>
+                  <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
+                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                      <!-- Download SVG icon from http://tabler-icons.io/i/package -->
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3"></path><path d="M12 11m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path><path d="M12 12l0 2.5"></path></svg>
                     </span>
-                    <span class="nav-link-title">
-                      Interface
+                    <span class="nav-link-title nav-link-custom">
+                      VSAFE
                     </span>
                   </a>
                   <div class="dropdown-menu">
-                    <div class="dropdown-menu-columns">
-                      <div class="dropdown-menu-column">
-                        <a class="dropdown-item" href="./alerts.html">
-                          Alerts
-                        </a>
-                        <a class="dropdown-item" href="./accordion.html">
-                          Accordion
-                        </a>
-                        <div class="dropend">
-                          <a class="dropdown-item dropdown-toggle" href="#sidebar-authentication" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
-                            Authentication
-                          </a>
-                          <div class="dropdown-menu">
-                            <a href="./sign-in.html" class="dropdown-item">
-                              Sign in
-                            </a>
-                            <a href="./sign-in-link.html" class="dropdown-item">
-                              Sign in link
-                            </a>
-                            <a href="./sign-in-illustration.html" class="dropdown-item">
-                              Sign in with illustration
-                            </a>
-                            <a href="./sign-in-cover.html" class="dropdown-item">
-                              Sign in with cover
-                            </a>
-                            <a href="./sign-up.html" class="dropdown-item">
-                              Sign up
-                            </a>
-                            <a href="./forgot-password.html" class="dropdown-item">
-                              Forgot password
-                            </a>
-                            <a href="./terms-of-service.html" class="dropdown-item">
-                              Terms of service
-                            </a>
-                            <a href="./auth-lock.html" class="dropdown-item">
-                              Lock screen
-                            </a>
-                            <a href="./2-step-verification.html" class="dropdown-item">
-                              2 step verification
-                            </a>
-                            <a href="./2-step-verification-code.html" class="dropdown-item">
-                              2 step verification code
-                            </a>
-                          </div>
-                        </div>
-                        <a class="dropdown-item" href="./blank.html">
-                          Blank page
-                        </a>
-                        <a class="dropdown-item" href="./badges.html">
-                          Badges
-                          <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
-                        </a>
-                        <a class="dropdown-item" href="./buttons.html">
-                          Buttons
-                        </a>
-                        <div class="dropend">
-                          <a class="dropdown-item dropdown-toggle" href="#sidebar-cards" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
-                            Cards
-                            <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
-                          </a>
-                          <div class="dropdown-menu">
-                            <a href="./cards.html" class="dropdown-item">
-                              Sample cards
-                            </a>
-                            <a href="./card-actions.html" class="dropdown-item">
-                              Card actions
-                              <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
-                            </a>
-                            <a href="./cards-masonry.html" class="dropdown-item">
-                              Cards Masonry
-                            </a>
-                          </div>
-                        </div>
-                        <a class="dropdown-item" href="./carousel.html">
-                          Carousel
-                          <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
-                        </a>
-                        <a class="dropdown-item" href="./charts.html">
-                          Charts
-                        </a>
-                        <a class="dropdown-item" href="./colors.html">
-                          Colors
-                        </a>
-                        <a class="dropdown-item" href="./colorpicker.html">
-                          Color picker
-                          <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
-                        </a>
-                        <a class="dropdown-item" href="./datagrid.html">
-                          Data grid
-                          <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
-                        </a>
-                        <a class="dropdown-item" href="./datatables.html">
-                          Datatables
-                          <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
-                        </a>
-                        <a class="dropdown-item" href="./dropdowns.html">
-                          Dropdowns
-                        </a>
-                        <a class="dropdown-item" href="./dropzone.html">
-                          Dropzone
-                          <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
-                        </a>
-                        <div class="dropend">
-                          <a class="dropdown-item dropdown-toggle" href="#sidebar-error" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
-                            Error pages
-                          </a>
-                          <div class="dropdown-menu">
-                            <a href="./error-404.html" class="dropdown-item">
-                              404 page
-                            </a>
-                            <a href="./error-500.html" class="dropdown-item">
-                              500 page
-                            </a>
-                            <a href="./error-maintenance.html" class="dropdown-item">
-                              Maintenance page
-                            </a>
-                          </div>
-                        </div>
-                        <a class="dropdown-item" href="./flags.html">
-                          Flags
-                          <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
-                        </a>
-                        <a class="dropdown-item" href="./inline-player.html">
-                          Inline player
-                          <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
-                        </a>
-                      </div>
-                      <div class="dropdown-menu-column">
-                        <a class="dropdown-item" href="./lightbox.html">
-                          Lightbox
-                          <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
-                        </a>
-                        <a class="dropdown-item" href="./lists.html">
-                          Lists
-                        </a>
-                        <a class="dropdown-item" href="./modals.html">
-                          Modal
-                        </a>
-                        <a class="dropdown-item" href="./maps.html">
-                          Map
-                        </a>
-                        <a class="dropdown-item" href="./map-fullsize.html">
-                          Map fullsize
-                        </a>
-                        <a class="dropdown-item" href="./maps-vector.html">
-                          Map vector
-                          <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
-                        </a>
-                        <a class="dropdown-item" href="./markdown.html">
-                          Markdown
-                        </a>
-                        <a class="dropdown-item" href="./navigation.html">
-                          Navigation
-                        </a>
-                        <a class="dropdown-item" href="./offcanvas.html">
-                          Offcanvas
-                        </a>
-                        <a class="dropdown-item" href="./pagination.html">
-                          <!-- Download SVG icon from http://tabler-icons.io/i/pie-chart -->
-                          Pagination
-                        </a>
-                        <a class="dropdown-item" href="./placeholder.html">
-                          Placeholder
-                        </a>
-                        <a class="dropdown-item" href="./steps.html">
-                          Steps
-                          <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
-                        </a>
-                        <a class="dropdown-item" href="./stars-rating.html">
-                          Stars rating
-                          <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
-                        </a>
-                        <a class="dropdown-item" href="./tabs.html">
-                          Tabs
-                        </a>
-                        <a class="dropdown-item" href="./tags.html">
-                          Tags
-                        </a>
-                        <a class="dropdown-item" href="./tables.html">
-                          Tables
-                        </a>
-                        <a class="dropdown-item" href="./typography.html">
-                          Typography
-                        </a>
-                        <a class="dropdown-item" href="./tinymce.html">
-                          TinyMCE
-                          <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
-                        </a>
-                      </div>
-                    </div>
+                    <a class="dropdown-item" href="https://tabler.io/docs" target="_blank" rel="noopener">
+                      Food Examination Form
+                    </a>
+                    <a class="dropdown-item" href="changelog.html">
+                      Examination Analysis
+                    </a>
                   </div>
+                  
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="./form-elements.html" >
-                    <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 11l3 3l8 -8" /><path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" /></svg>
-                    </span>
-                    <span class="nav-link-title">
-                      Forms
-                    </span>
-                  </a>
-                </li>
+
+
                 <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
-                    <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></svg>
-                    </span>
-                    <span class="nav-link-title">
-                      Extra
-                    </span>
-                  </a>
-                  <div class="dropdown-menu">
-                    <div class="dropdown-menu-columns">
-                      <div class="dropdown-menu-column">
-                        <a class="dropdown-item" href="./empty.html">
-                          Empty page
-                        </a>
-                        <a class="dropdown-item" href="./cookie-banner.html">
-                          Cookie banner
-                          <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
-                        </a>
-                        <a class="dropdown-item" href="./chat.html">
-                          Chat
-                          <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
-                        </a>
-                        <a class="dropdown-item" href="./activity.html">
-                          Activity
-                        </a>
-                        <a class="dropdown-item" href="./gallery.html">
-                          Gallery
-                        </a>
-                        <a class="dropdown-item" href="./invoice.html">
-                          Invoice
-                        </a>
-                        <a class="dropdown-item" href="./search-results.html">
-                          Search results
-                        </a>
-                        <a class="dropdown-item" href="./pricing.html">
-                          Pricing cards
-                        </a>
-                        <a class="dropdown-item" href="./pricing-table.html">
-                          Pricing table
-                        </a>
-                        <a class="dropdown-item" href="./faq.html">
-                          FAQ
-                          <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
-                        </a>
-                        <a class="dropdown-item" href="./users.html">
-                          Users
-                        </a>
-                        <a class="dropdown-item" href="./license.html">
-                          License
-                        </a>
-                      </div>
-                      <div class="dropdown-menu-column">
-                        <a class="dropdown-item" href="./logs.html">
-                          Logs
-                          <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
-                        </a>
-                        <a class="dropdown-item" href="./music.html">
-                          Music
-                        </a>
-                        <a class="dropdown-item" href="./photogrid.html">
-                          Photogrid
-                          <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
-                        </a>
-                        <a class="dropdown-item" href="./tasks.html">
-                          Tasks
-                          <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
-                        </a>
-                        <a class="dropdown-item" href="./uptime.html">
-                          Uptime monitor
-                        </a>
-                        <a class="dropdown-item" href="./widgets.html">
-                          Widgets
-                        </a>
-                        <a class="dropdown-item" href="./wizard.html">
-                          Wizard
-                        </a>
-                        <a class="dropdown-item" href="./settings.html">
-                          Settings
-                          <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
-                        </a>
-                        <a class="dropdown-item" href="./trial-ended.html">
-                          Trial ended
-                          <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
-                        </a>
-                        <a class="dropdown-item" href="./job-listing.html">
-                          Job listing
-                          <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
-                        </a>
-                        <a class="dropdown-item" href="./page-loader.html">
-                          Page loader
-                          <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="nav-item active dropdown">
-                  <a class="nav-link dropdown-toggle" href="#navbar-layout" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
-                    <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/layout-2 -->
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v1a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M4 13m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v3a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M14 4m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v3a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M14 15m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v1a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /></svg>
-                    </span>
-                    <span class="nav-link-title">
-                      Layout
+                  <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
+                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"></path><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"></path><path d="M9 14l2 2l4 -4"></path></svg>
+                 </span>
+                    <span class="nav-link-title nav-link-custom">
+                      SHEDEIN
                     </span>
                   </a>
                   <div class="dropdown-menu">
-                    <div class="dropdown-menu-columns">
-                      <div class="dropdown-menu-column">
-                        <a class="dropdown-item" href="./layout-horizontal.html">
-                          Horizontal
-                        </a>
-                        <a class="dropdown-item" href="./layout-boxed.html">
-                          Boxed
-                          <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
-                        </a>
-                        <a class="dropdown-item" href="./layout-vertical.html">
-                          Vertical
-                        </a>
-                        <a class="dropdown-item" href="./layout-vertical-transparent.html">
-                          Vertical transparent
-                        </a>
-                        <a class="dropdown-item" href="./layout-vertical-right.html">
-                          Right vertical
-                        </a>
-                        <a class="dropdown-item active" href="./layout-condensed.html">
-                          Condensed
-                        </a>
-                        <a class="dropdown-item" href="./layout-combo.html">
-                          Combined
-                        </a>
-                      </div>
-                      <div class="dropdown-menu-column">
-                        <a class="dropdown-item" href="./layout-navbar-dark.html">
-                          Navbar dark
-                        </a>
-                        <a class="dropdown-item" href="./layout-navbar-sticky.html">
-                          Navbar sticky
-                        </a>
-                        <a class="dropdown-item" href="./layout-navbar-overlap.html">
-                          Navbar overlap
-                        </a>
-                        <a class="dropdown-item" href="./layout-rtl.html">
-                          RTL mode
-                        </a>
-                        <a class="dropdown-item" href="./layout-fluid.html">
-                          Fluid
-                        </a>
-                        <a class="dropdown-item" href="./layout-fluid-vertical.html">
-                          Fluid vertical
-                        </a>
-                      </div>
-                    </div>
+                    <a class="dropdown-item" href="shedein_food_safety_management.php" rel="noopener">
+                      Food Safety Management
+                    </a>
+                    <a class="dropdown-item" href="changelog.html">
+                      Occupational Health & Safety
+                    </a>
+                    <a class="dropdown-item" href="https://github.com/tabler/tabler" target="_blank" rel="noopener">
+                      Environment & Sustainability
+                    </a>
+                    <a class="dropdown-item" href="https://github.com/sponsors/codecalm" target="_blank" rel="noopener">
+                      <!-- Download SVG icon from http://tabler-icons.io/i/heart -->
+                      <!-- <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+                      </svg> -->
+                      Decision Intelligence
+                    </a>
                   </div>
+                  
                 </li>
+
+
+
                 <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
-                    <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/lifebuoy -->
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M15 15l3.35 3.35" /><path d="M9 15l-3.35 3.35" /><path d="M5.65 5.65l3.35 3.35" /><path d="M18.35 5.65l-3.35 3.35" /></svg>
+                  <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
+                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M13 5h8"></path><path d="M13 9h5"></path><path d="M13 15h8"></path><path d="M13 19h5"></path><path d="M3 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"></path><path d="M3 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"></path></svg>
+                  </span>
+                    <span class="nav-link-title nav-link-custom">
+                      SHECUP
                     </span>
-                    <span class="nav-link-title">
-                      Help
+                  </a>
+                  <div class="dropdown-menu">
+
+                  <a class="dropdown-item" href="shecup.php" rel="noopener">
+                        FSMS Audit Verification 
+                  </a>
+
+
+
+                  </div>
+                  
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
+                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                      <!-- Download SVG icon from http://tabler-icons.io/i/lifebuoy -->
+                      <!-- <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+                        <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                        <path d="M15 15l3.35 3.35" />
+                        <path d="M9 15l-3.35 3.35" />
+                        <path d="M5.65 5.65l3.35 3.35" />
+                        <path d="M18.35 5.65l-3.35 3.35" />
+                      </svg> -->
+
+
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"></path><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path></svg>
+                    </span>
+                    <span class="nav-link-title nav-link-custom" >
+                      Settings
                     </span>
                   </a>
                   <div class="dropdown-menu">
                     <a class="dropdown-item" href="https://tabler.io/docs" target="_blank" rel="noopener">
                       Documentation
                     </a>
-                    <a class="dropdown-item" href="./changelog.html">
+                    <a class="dropdown-item" href="changelog.html">
                       Changelog
                     </a>
                     <a class="dropdown-item" href="https://github.com/tabler/tabler" target="_blank" rel="noopener">
@@ -562,11 +301,44 @@
                     </a>
                     <a class="dropdown-item text-pink" href="https://github.com/sponsors/codecalm" target="_blank" rel="noopener">
                       <!-- Download SVG icon from http://tabler-icons.io/i/heart -->
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" /></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+                      </svg>
                       Sponsor project!
                     </a>
                   </div>
                 </li>
+
+                <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/lifebuoy -->
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M15 15l3.35 3.35"></path><path d="M9 15l-3.35 3.35"></path><path d="M5.65 5.65l3.35 3.35"></path><path d="M18.35 5.65l-3.35 3.35"></path></svg>
+                        </span>
+                        <span class="nav-link-title nav-link-custom">
+                          Help
+                        </span>
+                      </a>
+                      <div class="dropdown-menu">
+                        <a class="dropdown-item" href="https://tabler.io/docs" target="_blank" rel="noopener">
+                          Documentation
+                        </a>
+                        <a class="dropdown-item" href="https://preview.tabler.io/changelog.html">
+                          Changelog
+                        </a>
+                        <a class="dropdown-item" href="https://github.com/tabler/tabler" target="_blank" rel="noopener">
+                          Source code
+                        </a>
+                        <a class="dropdown-item text-pink" href="https://github.com/sponsors/codecalm" target="_blank" rel="noopener">
+                          <!-- Download SVG icon from http://tabler-icons.io/i/heart -->
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"></path></svg>
+                          Sponsor project!
+                        </a>
+                      </div>
+                </li>
+
+
+
               </ul>
             </div>
           </div>
@@ -583,27 +355,11 @@
                   Overview
                 </div>
                 <h2 class="page-title">
-                  Condensed layout ภาษาไทย
+                  Shec up 
                 </h2>
               </div>
               <!-- Page title actions -->
               <div class="col-auto ms-auto d-print-none">
-                <div class="btn-list">
-                  <span class="d-none d-sm-inline">
-                    <a href="#" class="btn">
-                      New view
-                    </a>
-                  </span>
-                  <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-report">
-                    <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                    Create new report
-                  </a>
-                  <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-report" aria-label="Create new report">
-                    <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                  </a>
-                </div>
               </div>
             </div>
           </div>
@@ -619,7 +375,7 @@
                 Try adjusting your search or filter to find what you're looking for.
               </p>
               <div class="empty-action">
-                <a href="./." class="btn btn-primary">
+                  <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-report">
                   <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
                   Add your first checklist
@@ -665,6 +421,9 @@
       </div>
     </div>
     <div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
+
+      <form method="post">
+
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -673,695 +432,68 @@
           </div>
           <div class="modal-body">
             <div class="mb-3">
-              <label class="form-label">Name</label>
-              <input type="text" class="form-control" name="example-text-input" placeholder="Your report name">
-            </div>
-            <label class="form-label">Report type</label>
-            <div class="form-selectgroup-boxes row mb-3">
-              <div class="col-lg-6">
-                <label class="form-selectgroup-item">
-                  <input type="radio" name="report-type" value="1" class="form-selectgroup-input" checked>
-                  <span class="form-selectgroup-label d-flex align-items-center p-3">
-                    <span class="me-3">
-                      <span class="form-selectgroup-check"></span>
-                    </span>
-                    <span class="form-selectgroup-label-content">
-                      <span class="form-selectgroup-title strong mb-1">Simple</span>
-                      <span class="d-block text-secondary">Provide only basic data needed for the report</span>
-                    </span>
-                  </span>
-                </label>
-              </div>
-              <div class="col-lg-6">
-                <label class="form-selectgroup-item">
-                  <input type="radio" name="report-type" value="1" class="form-selectgroup-input">
-                  <span class="form-selectgroup-label d-flex align-items-center p-3">
-                    <span class="me-3">
-                      <span class="form-selectgroup-check"></span>
-                    </span>
-                    <span class="form-selectgroup-label-content">
-                      <span class="form-selectgroup-title strong mb-1">Advanced</span>
-                      <span class="d-block text-secondary">Insert charts and additional advanced analyses to be inserted in the report</span>
-                    </span>
-                  </span>
-                </label>
-              </div>
+              <label class="form-label">Auditor Name</label>
+              <input type="text" class="form-control" name="audit_name" value="<?=$_SESSION['profile_firstname']." ".$_SESSION['profile_lastname'] ?>" placeholder="Your report name">
             </div>
             <div class="row">
-              <div class="col-lg-8">
+
+
+            <div class="col-lg-8">
                 <div class="mb-3">
-                  <label class="form-label">Report url</label>
+                  <label class="form-label">Site Name</label>
                   <div class="input-group input-group-flat">
-                    <span class="input-group-text">
-                      https://tabler.io/reports/
-                    </span>
-                    <input type="text" class="form-control ps-0"  value="report-01" autocomplete="off">
+                    <input type="text" class="form-control" value="<?=$_SESSION['site_name'];?>" autocomplete="off">
                   </div>
                 </div>
               </div>
               <div class="col-lg-4">
                 <div class="mb-3">
-                  <label class="form-label">Visibility</label>
-                  <select class="form-select">
-                    <option value="1" selected>Private</option>
-                    <option value="2">Public</option>
-                    <option value="3">Hidden</option>
+                  <label class="form-label">Checklist Type</label>
+                  <select class="form-select" name="audit_type">
+                    <option value="Internal" selected>Internal</option>
+                    <option value="External">External</option>
                   </select>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="mb-3">
-                  <label class="form-label">Client name</label>
-                  <input type="text" class="form-control">
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="mb-3">
-                  <label class="form-label">Reporting period</label>
-                  <input type="date" class="form-control">
-                </div>
-              </div>
+
               <div class="col-lg-12">
                 <div>
                   <label class="form-label">Additional information</label>
-                  <textarea class="form-control" rows="3"></textarea>
+                  <textarea class="form-control" rows="3" name="additional"></textarea>
                 </div>
               </div>
-            </div>
+
+
+
+
+            </div> <!--  row -->
+
+
+
+
+
           </div>
+ 
           <div class="modal-footer">
             <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
               Cancel
             </a>
-            <a href="#" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
-              <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-              Create new report
-            </a>
+            <input type="hidden" class="form-control" name="site_id" value="<?=$_SESSION['site_id'];?>"> 
+            <button type="submit" class="btn btn-primary">
+
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+              Create new checklist
+            </button>
+
+
           </div>
         </div>
       </div>
+
+      </form>
     </div>
-    <!-- Libs JS -->
-    <script src="libs/apexcharts/dist/apexcharts.min.js?1695847769" defer></script>
-    <script src="libs/jsvectormap/dist/js/jsvectormap.min.js?1695847769" defer></script>
-    <script src="libs/jsvectormap/dist/maps/world.js?1695847769" defer></script>
-    <script src="libs/jsvectormap/dist/maps/world-merc.js?1695847769" defer></script>
+
     <!-- Tabler Core -->
-    <script src="js/tabler.min.js?1695847769" defer></script>
-    <script src="js/demo.min.js?1695847769" defer></script>
-    <script>
-      // @formatter:off
-      document.addEventListener("DOMContentLoaded", function () {
-      	window.ApexCharts && (new ApexCharts(document.getElementById('chart-revenue-bg'), {
-      		chart: {
-      			type: "area",
-      			fontFamily: 'inherit',
-      			height: 40.0,
-      			sparkline: {
-      				enabled: true
-      			},
-      			animations: {
-      				enabled: false
-      			},
-      		},
-      		dataLabels: {
-      			enabled: false,
-      		},
-      		fill: {
-      			opacity: .16,
-      			type: 'solid'
-      		},
-      		stroke: {
-      			width: 2,
-      			lineCap: "round",
-      			curve: "smooth",
-      		},
-      		series: [{
-      			name: "Profits",
-      			data: [37, 35, 44, 28, 36, 24, 65, 31, 37, 39, 62, 51, 35, 41, 35, 27, 93, 53, 61, 27, 54, 43, 19, 46, 39, 62, 51, 35, 41, 67]
-      		}],
-      		tooltip: {
-      			theme: 'dark'
-      		},
-      		grid: {
-      			strokeDashArray: 4,
-      		},
-      		xaxis: {
-      			labels: {
-      				padding: 0,
-      			},
-      			tooltip: {
-      				enabled: false
-      			},
-      			axisBorder: {
-      				show: false,
-      			},
-      			type: 'datetime',
-      		},
-      		yaxis: {
-      			labels: {
-      				padding: 4
-      			},
-      		},
-      		labels: [
-      			'2020-06-21', '2020-06-22', '2020-06-23', '2020-06-24', '2020-06-25', '2020-06-26', '2020-06-27', '2020-06-28', '2020-06-29', '2020-06-30', '2020-07-01', '2020-07-02', '2020-07-03', '2020-07-04', '2020-07-05', '2020-07-06', '2020-07-07', '2020-07-08', '2020-07-09', '2020-07-10', '2020-07-11', '2020-07-12', '2020-07-13', '2020-07-14', '2020-07-15', '2020-07-16', '2020-07-17', '2020-07-18', '2020-07-19', '2020-07-20'
-      		],
-      		colors: [tabler.getColor("primary")],
-      		legend: {
-      			show: false,
-      		},
-      	})).render();
-      });
-      // @formatter:on
-    </script>
-    <script>
-      // @formatter:off
-      document.addEventListener("DOMContentLoaded", function () {
-      	window.ApexCharts && (new ApexCharts(document.getElementById('chart-new-clients'), {
-      		chart: {
-      			type: "line",
-      			fontFamily: 'inherit',
-      			height: 40.0,
-      			sparkline: {
-      				enabled: true
-      			},
-      			animations: {
-      				enabled: false
-      			},
-      		},
-      		fill: {
-      			opacity: 1,
-      		},
-      		stroke: {
-      			width: [2, 1],
-      			dashArray: [0, 3],
-      			lineCap: "round",
-      			curve: "smooth",
-      		},
-      		series: [{
-      			name: "May",
-      			data: [37, 35, 44, 28, 36, 24, 65, 31, 37, 39, 62, 51, 35, 41, 35, 27, 93, 53, 61, 27, 54, 43, 4, 46, 39, 62, 51, 35, 41, 67]
-      		},{
-      			name: "April",
-      			data: [93, 54, 51, 24, 35, 35, 31, 67, 19, 43, 28, 36, 62, 61, 27, 39, 35, 41, 27, 35, 51, 46, 62, 37, 44, 53, 41, 65, 39, 37]
-      		}],
-      		tooltip: {
-      			theme: 'dark'
-      		},
-      		grid: {
-      			strokeDashArray: 4,
-      		},
-      		xaxis: {
-      			labels: {
-      				padding: 0,
-      			},
-      			tooltip: {
-      				enabled: false
-      			},
-      			type: 'datetime',
-      		},
-      		yaxis: {
-      			labels: {
-      				padding: 4
-      			},
-      		},
-      		labels: [
-      			'2020-06-21', '2020-06-22', '2020-06-23', '2020-06-24', '2020-06-25', '2020-06-26', '2020-06-27', '2020-06-28', '2020-06-29', '2020-06-30', '2020-07-01', '2020-07-02', '2020-07-03', '2020-07-04', '2020-07-05', '2020-07-06', '2020-07-07', '2020-07-08', '2020-07-09', '2020-07-10', '2020-07-11', '2020-07-12', '2020-07-13', '2020-07-14', '2020-07-15', '2020-07-16', '2020-07-17', '2020-07-18', '2020-07-19', '2020-07-20'
-      		],
-      		colors: [tabler.getColor("primary"), tabler.getColor("gray-600")],
-      		legend: {
-      			show: false,
-      		},
-      	})).render();
-      });
-      // @formatter:on
-    </script>
-    <script>
-      // @formatter:off
-      document.addEventListener("DOMContentLoaded", function () {
-      	window.ApexCharts && (new ApexCharts(document.getElementById('chart-active-users'), {
-      		chart: {
-      			type: "bar",
-      			fontFamily: 'inherit',
-      			height: 40.0,
-      			sparkline: {
-      				enabled: true
-      			},
-      			animations: {
-      				enabled: false
-      			},
-      		},
-      		plotOptions: {
-      			bar: {
-      				columnWidth: '50%',
-      			}
-      		},
-      		dataLabels: {
-      			enabled: false,
-      		},
-      		fill: {
-      			opacity: 1,
-      		},
-      		series: [{
-      			name: "Profits",
-      			data: [37, 35, 44, 28, 36, 24, 65, 31, 37, 39, 62, 51, 35, 41, 35, 27, 93, 53, 61, 27, 54, 43, 19, 46, 39, 62, 51, 35, 41, 67]
-      		}],
-      		tooltip: {
-      			theme: 'dark'
-      		},
-      		grid: {
-      			strokeDashArray: 4,
-      		},
-      		xaxis: {
-      			labels: {
-      				padding: 0,
-      			},
-      			tooltip: {
-      				enabled: false
-      			},
-      			axisBorder: {
-      				show: false,
-      			},
-      			type: 'datetime',
-      		},
-      		yaxis: {
-      			labels: {
-      				padding: 4
-      			},
-      		},
-      		labels: [
-      			'2020-06-21', '2020-06-22', '2020-06-23', '2020-06-24', '2020-06-25', '2020-06-26', '2020-06-27', '2020-06-28', '2020-06-29', '2020-06-30', '2020-07-01', '2020-07-02', '2020-07-03', '2020-07-04', '2020-07-05', '2020-07-06', '2020-07-07', '2020-07-08', '2020-07-09', '2020-07-10', '2020-07-11', '2020-07-12', '2020-07-13', '2020-07-14', '2020-07-15', '2020-07-16', '2020-07-17', '2020-07-18', '2020-07-19', '2020-07-20'
-      		],
-      		colors: [tabler.getColor("primary")],
-      		legend: {
-      			show: false,
-      		},
-      	})).render();
-      });
-      // @formatter:on
-    </script>
-    <script>
-      // @formatter:off
-      document.addEventListener("DOMContentLoaded", function () {
-      	window.ApexCharts && (new ApexCharts(document.getElementById('chart-mentions'), {
-      		chart: {
-      			type: "bar",
-      			fontFamily: 'inherit',
-      			height: 240,
-      			parentHeightOffset: 0,
-      			toolbar: {
-      				show: false,
-      			},
-      			animations: {
-      				enabled: false
-      			},
-      			stacked: true,
-      		},
-      		plotOptions: {
-      			bar: {
-      				columnWidth: '50%',
-      			}
-      		},
-      		dataLabels: {
-      			enabled: false,
-      		},
-      		fill: {
-      			opacity: 1,
-      		},
-      		series: [{
-      			name: "Web",
-      			data: [1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 2, 12, 5, 8, 22, 6, 8, 6, 4, 1, 8, 24, 29, 51, 40, 47, 23, 26, 50, 26, 41, 22, 46, 47, 81, 46, 6]
-      		},{
-      			name: "Social",
-      			data: [2, 5, 4, 3, 3, 1, 4, 7, 5, 1, 2, 5, 3, 2, 6, 7, 7, 1, 5, 5, 2, 12, 4, 6, 18, 3, 5, 2, 13, 15, 20, 47, 18, 15, 11, 10, 0]
-      		},{
-      			name: "Other",
-      			data: [2, 9, 1, 7, 8, 3, 6, 5, 5, 4, 6, 4, 1, 9, 3, 6, 7, 5, 2, 8, 4, 9, 1, 2, 6, 7, 5, 1, 8, 3, 2, 3, 4, 9, 7, 1, 6]
-      		}],
-      		tooltip: {
-      			theme: 'dark'
-      		},
-      		grid: {
-      			padding: {
-      				top: -20,
-      				right: 0,
-      				left: -4,
-      				bottom: -4
-      			},
-      			strokeDashArray: 4,
-      			xaxis: {
-      				lines: {
-      					show: true
-      				}
-      			},
-      		},
-      		xaxis: {
-      			labels: {
-      				padding: 0,
-      			},
-      			tooltip: {
-      				enabled: false
-      			},
-      			axisBorder: {
-      				show: false,
-      			},
-      			type: 'datetime',
-      		},
-      		yaxis: {
-      			labels: {
-      				padding: 4
-      			},
-      		},
-      		labels: [
-      			'2020-06-21', '2020-06-22', '2020-06-23', '2020-06-24', '2020-06-25', '2020-06-26', '2020-06-27', '2020-06-28', '2020-06-29', '2020-06-30', '2020-07-01', '2020-07-02', '2020-07-03', '2020-07-04', '2020-07-05', '2020-07-06', '2020-07-07', '2020-07-08', '2020-07-09', '2020-07-10', '2020-07-11', '2020-07-12', '2020-07-13', '2020-07-14', '2020-07-15', '2020-07-16', '2020-07-17', '2020-07-18', '2020-07-19', '2020-07-20', '2020-07-21', '2020-07-22', '2020-07-23', '2020-07-24', '2020-07-25', '2020-07-26', '2020-07-27'
-      		],
-      		colors: [tabler.getColor("primary"), tabler.getColor("primary", 0.8), tabler.getColor("green", 0.8)],
-      		legend: {
-      			show: false,
-      		},
-      	})).render();
-      });
-      // @formatter:on
-    </script>
-    <script>
-      // @formatter:on
-      document.addEventListener("DOMContentLoaded", function() {
-      	const map = new jsVectorMap({
-      		selector: '#map-world',
-      		map: 'world',
-      		backgroundColor: 'transparent',
-      		regionStyle: {
-      			initial: {
-      				fill: tabler.getColor('body-bg'),
-      				stroke: tabler.getColor('border-color'),
-      				strokeWidth: 2,
-      			}
-      		},
-      		zoomOnScroll: false,
-      		zoomButtons: false,
-      		// -------- Series --------
-      		visualizeData: {
-      			scale: [tabler.getColor('bg-surface'), tabler.getColor('primary')],
-      			values: { "AF": 16, "AL": 11, "DZ": 158, "AO": 85, "AG": 1, "AR": 351, "AM": 8, "AU": 1219, "AT": 366, "AZ": 52, "BS": 7, "BH": 21, "BD": 105, "BB": 3, "BY": 52, "BE": 461, "BZ": 1, "BJ": 6, "BT": 1, "BO": 19, "BA": 16, "BW": 12, "BR": 2023, "BN": 11, "BG": 44, "BF": 8, "BI": 1, "KH": 11, "CM": 21, "CA": 1563, "CV": 1, "CF": 2, "TD": 7, "CL": 199, "CN": 5745, "CO": 283, "KM": 0, "CD": 12, "CG": 11, "CR": 35, "CI": 22, "HR": 59, "CY": 22, "CZ": 195, "DK": 304, "DJ": 1, "DM": 0, "DO": 50, "EC": 61, "EG": 216, "SV": 21, "GQ": 14, "ER": 2, "EE": 19, "ET": 30, "FJ": 3, "FI": 231, "FR": 2555, "GA": 12, "GM": 1, "GE": 11, "DE": 3305, "GH": 18, "GR": 305, "GD": 0, "GT": 40, "GN": 4, "GW": 0, "GY": 2, "HT": 6, "HN": 15, "HK": 226, "HU": 132, "IS": 12, "IN": 1430, "ID": 695, "IR": 337, "IQ": 84, "IE": 204, "IL": 201, "IT": 2036, "JM": 13, "JP": 5390, "JO": 27, "KZ": 129, "KE": 32, "KI": 0, "KR": 986, "KW": 117, "KG": 4, "LA": 6, "LV": 23, "LB": 39, "LS": 1, "LR": 0, "LY": 77, "LT": 35, "LU": 52, "MK": 9, "MG": 8, "MW": 5, "MY": 218, "MV": 1, "ML": 9, "MT": 7, "MR": 3, "MU": 9, "MX": 1004, "MD": 5, "MN": 5, "ME": 3, "MA": 91, "MZ": 10, "MM": 35, "NA": 11, "NP": 15, "NL": 770, "NZ": 138, "NI": 6, "NE": 5, "NG": 206, "NO": 413, "OM": 53, "PK": 174, "PA": 27, "PG": 8, "PY": 17, "PE": 153, "PH": 189, "PL": 438, "PT": 223, "QA": 126, "RO": 158, "RU": 1476, "RW": 5, "WS": 0, "ST": 0, "SA": 434, "SN": 12, "RS": 38, "SC": 0, "SL": 1, "SG": 217, "SK": 86, "SI": 46, "SB": 0, "ZA": 354, "ES": 1374, "LK": 48, "KN": 0, "LC": 1, "VC": 0, "SD": 65, "SR": 3, "SZ": 3, "SE": 444, "CH": 522, "SY": 59, "TW": 426, "TJ": 5, "TZ": 22, "TH": 312, "TL": 0, "TG": 3, "TO": 0, "TT": 21, "TN": 43, "TR": 729, "TM": 0, "UG": 17, "UA": 136, "AE": 239, "GB": 2258, "US": 4624, "UY": 40, "UZ": 37, "VU": 0, "VE": 285, "VN": 101, "YE": 30, "ZM": 15, "ZW": 5 },
-      		},
-      	});
-      	window.addEventListener("resize", () => {
-      		map.updateSize();
-      	});
-      });
-      // @formatter:off
-    </script>
-    <script>
-      // @formatter:off
-      document.addEventListener("DOMContentLoaded", function () {
-      	window.ApexCharts && (new ApexCharts(document.getElementById('sparkline-activity'), {
-      		chart: {
-      			type: "radialBar",
-      			fontFamily: 'inherit',
-      			height: 40,
-      			width: 40,
-      			animations: {
-      				enabled: false
-      			},
-      			sparkline: {
-      				enabled: true
-      			},
-      		},
-      		tooltip: {
-      			enabled: false,
-      		},
-      		plotOptions: {
-      			radialBar: {
-      				hollow: {
-      					margin: 0,
-      					size: '75%'
-      				},
-      				track: {
-      					margin: 0
-      				},
-      				dataLabels: {
-      					show: false
-      				}
-      			}
-      		},
-      		colors: [tabler.getColor("blue")],
-      		series: [35],
-      	})).render();
-      });
-      // @formatter:on
-    </script>
-    <script>
-      // @formatter:off
-      document.addEventListener("DOMContentLoaded", function () {
-      	window.ApexCharts && (new ApexCharts(document.getElementById('chart-development-activity'), {
-      		chart: {
-      			type: "area",
-      			fontFamily: 'inherit',
-      			height: 192,
-      			sparkline: {
-      				enabled: true
-      			},
-      			animations: {
-      				enabled: false
-      			},
-      		},
-      		dataLabels: {
-      			enabled: false,
-      		},
-      		fill: {
-      			opacity: .16,
-      			type: 'solid'
-      		},
-      		stroke: {
-      			width: 2,
-      			lineCap: "round",
-      			curve: "smooth",
-      		},
-      		series: [{
-      			name: "Purchases",
-      			data: [3, 5, 4, 6, 7, 5, 6, 8, 24, 7, 12, 5, 6, 3, 8, 4, 14, 30, 17, 19, 15, 14, 25, 32, 40, 55, 60, 48, 52, 70]
-      		}],
-      		tooltip: {
-      			theme: 'dark'
-      		},
-      		grid: {
-      			strokeDashArray: 4,
-      		},
-      		xaxis: {
-      			labels: {
-      				padding: 0,
-      			},
-      			tooltip: {
-      				enabled: false
-      			},
-      			axisBorder: {
-      				show: false,
-      			},
-      			type: 'datetime',
-      		},
-      		yaxis: {
-      			labels: {
-      				padding: 4
-      			},
-      		},
-      		labels: [
-      			'2020-06-21', '2020-06-22', '2020-06-23', '2020-06-24', '2020-06-25', '2020-06-26', '2020-06-27', '2020-06-28', '2020-06-29', '2020-06-30', '2020-07-01', '2020-07-02', '2020-07-03', '2020-07-04', '2020-07-05', '2020-07-06', '2020-07-07', '2020-07-08', '2020-07-09', '2020-07-10', '2020-07-11', '2020-07-12', '2020-07-13', '2020-07-14', '2020-07-15', '2020-07-16', '2020-07-17', '2020-07-18', '2020-07-19', '2020-07-20'
-      		],
-      		colors: [tabler.getColor("primary")],
-      		legend: {
-      			show: false,
-      		},
-      		point: {
-      			show: false
-      		},
-      	})).render();
-      });
-      // @formatter:on
-    </script>
-    <script>
-      // @formatter:off
-      document.addEventListener("DOMContentLoaded", function () {
-      	window.ApexCharts && (new ApexCharts(document.getElementById('sparkline-bounce-rate-1'), {
-      		chart: {
-      			type: "line",
-      			fontFamily: 'inherit',
-      			height: 24,
-      			animations: {
-      				enabled: false
-      			},
-      			sparkline: {
-      				enabled: true
-      			},
-      		},
-      		tooltip: {
-      			enabled: false,
-      		},
-      		stroke: {
-      			width: 2,
-      			lineCap: "round",
-      		},
-      		series: [{
-      			color: tabler.getColor("primary"),
-      			data: [17, 24, 20, 10, 5, 1, 4, 18, 13]
-      		}],
-      	})).render();
-      });
-      // @formatter:on
-    </script>
-    <script>
-      // @formatter:off
-      document.addEventListener("DOMContentLoaded", function () {
-      	window.ApexCharts && (new ApexCharts(document.getElementById('sparkline-bounce-rate-2'), {
-      		chart: {
-      			type: "line",
-      			fontFamily: 'inherit',
-      			height: 24,
-      			animations: {
-      				enabled: false
-      			},
-      			sparkline: {
-      				enabled: true
-      			},
-      		},
-      		tooltip: {
-      			enabled: false,
-      		},
-      		stroke: {
-      			width: 2,
-      			lineCap: "round",
-      		},
-      		series: [{
-      			color: tabler.getColor("primary"),
-      			data: [13, 11, 19, 22, 12, 7, 14, 3, 21]
-      		}],
-      	})).render();
-      });
-      // @formatter:on
-    </script>
-    <script>
-      // @formatter:off
-      document.addEventListener("DOMContentLoaded", function () {
-      	window.ApexCharts && (new ApexCharts(document.getElementById('sparkline-bounce-rate-3'), {
-      		chart: {
-      			type: "line",
-      			fontFamily: 'inherit',
-      			height: 24,
-      			animations: {
-      				enabled: false
-      			},
-      			sparkline: {
-      				enabled: true
-      			},
-      		},
-      		tooltip: {
-      			enabled: false,
-      		},
-      		stroke: {
-      			width: 2,
-      			lineCap: "round",
-      		},
-      		series: [{
-      			color: tabler.getColor("primary"),
-      			data: [10, 13, 10, 4, 17, 3, 23, 22, 19]
-      		}],
-      	})).render();
-      });
-      // @formatter:on
-    </script>
-    <script>
-      // @formatter:off
-      document.addEventListener("DOMContentLoaded", function () {
-      	window.ApexCharts && (new ApexCharts(document.getElementById('sparkline-bounce-rate-4'), {
-      		chart: {
-      			type: "line",
-      			fontFamily: 'inherit',
-      			height: 24,
-      			animations: {
-      				enabled: false
-      			},
-      			sparkline: {
-      				enabled: true
-      			},
-      		},
-      		tooltip: {
-      			enabled: false,
-      		},
-      		stroke: {
-      			width: 2,
-      			lineCap: "round",
-      		},
-      		series: [{
-      			color: tabler.getColor("primary"),
-      			data: [6, 15, 13, 13, 5, 7, 17, 20, 19]
-      		}],
-      	})).render();
-      });
-      // @formatter:on
-    </script>
-    <script>
-      // @formatter:off
-      document.addEventListener("DOMContentLoaded", function () {
-      	window.ApexCharts && (new ApexCharts(document.getElementById('sparkline-bounce-rate-5'), {
-      		chart: {
-      			type: "line",
-      			fontFamily: 'inherit',
-      			height: 24,
-      			animations: {
-      				enabled: false
-      			},
-      			sparkline: {
-      				enabled: true
-      			},
-      		},
-      		tooltip: {
-      			enabled: false,
-      		},
-      		stroke: {
-      			width: 2,
-      			lineCap: "round",
-      		},
-      		series: [{
-      			color: tabler.getColor("primary"),
-      			data: [2, 11, 15, 14, 21, 20, 8, 23, 18, 14]
-      		}],
-      	})).render();
-      });
-      // @formatter:on
-    </script>
-    <script>
-      // @formatter:off
-      document.addEventListener("DOMContentLoaded", function () {
-      	window.ApexCharts && (new ApexCharts(document.getElementById('sparkline-bounce-rate-6'), {
-      		chart: {
-      			type: "line",
-      			fontFamily: 'inherit',
-      			height: 24,
-      			animations: {
-      				enabled: false
-      			},
-      			sparkline: {
-      				enabled: true
-      			},
-      		},
-      		tooltip: {
-      			enabled: false,
-      		},
-      		stroke: {
-      			width: 2,
-      			lineCap: "round",
-      		},
-      		series: [{
-      			color: tabler.getColor("primary"),
-      			data: [22, 12, 7, 14, 3, 21, 8, 23, 18, 14]
-      		}],
-      	})).render();
-      });
-      // @formatter:on
-    </script>
+    <script src="js/tabler.min.js" defer></script>
   </body>
 </html>
