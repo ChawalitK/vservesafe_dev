@@ -1,55 +1,26 @@
 <?php
+session_start();
+$table = 'shecup_fsms_audit';
+$primaryKey = 'audit_id';
 
-/*
- * DataTables example server-side processing script.
- *
- * Please note that this script is intentionally extremely simple to show how
- * server-side processing can be implemented, and probably shouldn't be used as
- * the basis for a large complex system. It is suitable for simple use cases as
- * for learning.
- *
- * See http://datatables.net/usage/server-side for full details on the server-
- * side processing requirements of DataTables.
- *
- * @license MIT - http://datatables.net/license_mit
- */
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Easy set variables
- */
-
-// DB table to use
-$table = 'datatables_demo';
-
-// Table's primary key
-$primaryKey = 'id';
-
-// Array of database columns which should be read and sent back to DataTables.
-// The `db` parameter represents the column name in the database, while the `dt`
-// parameter represents the DataTables column identifier. In this case simple
-// indexes
 $columns = array(
-	array( 'db' => 'first_name', 'dt' => 0 ),
-	array( 'db' => 'last_name',  'dt' => 1 ),
-	array( 'db' => 'position',   'dt' => 2 ),
-	array( 'db' => 'office',     'dt' => 3 ),
+	array( 'db' => 'audit_referance', 'dt' => 0 ),
 	array(
-		'db'        => 'start_date',
-		'dt'        => 4,
+		'db'        => 'audit_date',
+		'dt'        => 1,
 		'formatter' => function( $d, $row ) {
-			return date( 'jS M y', strtotime($d));
+			return date( 'd-M-Y H:i:s', strtotime($d));
 		}
 	),
-	array(
-		'db'        => 'salary',
-		'dt'        => 5,
-		'formatter' => function( $d, $row ) {
-			return '$'.number_format($d);
-		}
-	)
+	array( 'db' => 'audit_type',  'dt' => 2 ),
+	array( 'db' => 'audit_name',   'dt' => 3 ),
+	array( 'db' => 'achievement',     'dt' => 4 ),
+	array( 'db' => 'total_score',     'dt' => 5 ),
+	array( 'db' => 'total_point',     'dt' => 6 ),
+	array( 'db' => 'total_answer',     'dt' => 7 ),
+	array( 'db' => 'total_na',     'dt' => 8 )
 );
 
-// SQL server connection information
 $sql_details = array(
 	'user' => 'root',
 	'pass' => '!QAZxsw2#',
@@ -57,16 +28,11 @@ $sql_details = array(
 	'host' => 'localhost'
 );
 
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * If you just want to use the basic configuration for DataTables with PHP
- * server-side, there is no need to edit below this line.
- */
-
 require( '../classes/ssp.class.php' );
 
 echo json_encode(
-	SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns )
+	// SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns)
+	SSP::complex( $_GET, $sql_details, $table, $primaryKey, $columns, null, "user_id=".$_SESSION['user_id']."" )
 );
 
 

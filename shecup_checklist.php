@@ -9,26 +9,109 @@ require_once("classes/Shecup.php");
 
 $shecup = new Shecup();
 
-if((!isset($_SESSION['user_id'])) && (!isset($_SESSION['user_email']))){
-  header("location:login.php");
+$_SESSION['checklist_id'] = 20240032;
+$_SESSION['lang'] = 'th';
+$_SESSION['firstname'] = 'อ๋อง';
+$_SESSION['lastname'] = 'ทดสอบ';
+
+if(isset($_POST['q']) && count($_POST['q'])>0){
+   $answerx =  $shecup->addAnswer($_POST, $_SESSION['checklist_id']);
 }
 
-if((isset($_POST['site_id'])) && (isset($_POST['audit_type']))){  
+$list_step = "";
+$sections = $shecup->getAllSection($_SESSION['lang'],  $_SESSION['checklist_id']);
+$last_section_id = array(1);
+foreach ($sections as $k => $v) { 
+
+  if($sections[$k]["section_id"] > 0){
+     array_push($last_section_id, $sections[$k]["section_id"]+1);
+  }
+
+  if (in_array($sections[$k]["question_no"], $last_section_id)) {
+     if( $sections[$k]["question_no"] == end($last_section_id)){
+        $list_step .= '<li class="step-item active" style="word-wrap: normal;"><a href="'.$_SERVER['PHP_SELF'].'">'.$sections[$k]["question_no"].'.'.$sections[$k]["question"].'</a></li>';
+     }else{
+        $list_step .= '<li class="step-item" style="word-wrap: normal;"><a href="'.$_SERVER['PHP_SELF'].'?sid='.$sections[$k]["question_no"].'">'.$sections[$k]["question_no"].'.'.$sections[$k]["question"].'</a></li>';
+     }
+  }else{
+     $list_step .= '<li class="step-item" style="word-wrap: normal;"><span>'.$sections[$k]["question_no"].'.'.$sections[$k]["question"].'</span></li>';
+  }
+}
+
+$question = $shecup->getQuestionBySection($_SESSION['lang'], isset($_GET['sid']) ? $_GET['sid'] : end($last_section_id));
+$section  = $shecup->getSectionById($_SESSION['lang'], isset($_GET['sid']) ? $_GET['sid'] : end($last_section_id));
+
+$list_question = "";
+
+foreach ($question as $k => $v) {
+
+    if($question[$k]['risk_level'] == "C"){
+      $bgcolor_risk_level = 'bg-red text-primary-fg';
+    }else if($question[$k]['risk_level'] == "M"){
+      $bgcolor_risk_level = 'bg-yellow text-primary-fg';
+    }else{
+      $bgcolor_risk_level = 'bg-muted-lt';
+    }
+
+    $list_question .= '
+    
+    <div class="card" style="margin-bottom:20px;">
+                  <div class="card-header">
+                    <div>
+                      <div class="row align-items-center">
+                        <div class="col-auto">
+                          <span class="avatar bg-primary text-primary-fg" style="font-size:17px;">'.$question[$k]['question_no'].'</span>
+                        </div>
+                        <div class="col">
+                          <strong style="font-size:17px;">'.$question[$k]['question'].'</strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-actions" style="min-width:95px;">
+                      <span class="avatar '.$bgcolor_risk_level.'">'.$question[$k]['risk_level'].'</span>
+                      <span class="avatar bg-green text-primary-fg">'.$question[$k]['score'].'</span>
+                    </div>
+                  </div>
+    
+    
+    
+    
+    <div class="card-body"><div class="divide-y">
   
-  $_post = array();
-  $_post['site_id'] = $_POST['site_id'];
-  $_post['user_id'] = $_SESSION['user_id'];
-  $_post['audit_name'] = $_POST['audit_name'];
-  $_post['audit_type'] = $_POST['audit_type']; 
-  $_post['additional'] = $_POST['additional'];
+                        <div>
+                          <div class="row">
+                            <div class="mb-3">
+                              <label class="form-label"><strong>Compliance Status</strong></label>
+                              <input type="hidden" id="q['.$question[$k]["question_no"].']" name="q[]" value="'.$question[$k]["question_no"].'">
+                              <input type="hidden" name="score['.$question[$k]["question_no"].']" value="'.$question[$k]["score"].'" >
+                              <label class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="a['.$question[$k]['question_no'].']" value="N/A"/>
+                                <span class="form-check-label">N/A</span>
+                              </label>
+                              <label class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="a['.$question[$k]['question_no'].']" value="Compliance"/>
+                                <span class="form-check-label">Compliance</span>
+                              </label>
+                              <label class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="a['.$question[$k]['question_no'].']" value="Non Compliance"/>
+                                <span class="form-check-label">Non Compliance</span>
+                              </label>
+                              <label class="form-label"><strong>Findings</strong></label>
+                              <textarea class="form-control" rows="3" name="findings['.$question[$k]["question_no"].']" value=""></textarea>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      </div>
 
-  $last_checklist_id = $shecup->addChecklist($_post);
+                      </div>
+                      ';
 
-  header('location:'.$_SERVER['PHP_SELF']);
+
 }
 
 
-$checklist_rows = $shecup->getChecklistById($_SESSION['user_id']);
+
 
 ?>
 <!DOCTYPE html>
@@ -338,114 +421,148 @@ $checklist_rows = $shecup->getChecklistById($_SESSION['user_id']);
                   FSMS Audit Verification
                 </h2>
               </div>
-              <?php if(!empty($checklist_rows)){?>
-              <div class="col-auto ms-auto d-print-none">
-                <div class="btn-list">
-                  <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-report">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
-                    Create new checklist
-                  </a>
-                </div>
-              </div>
-              <?php } ?>
-
               <!-- Page title actions -->
               <div class="col-auto ms-auto d-print-none">
               </div>
             </div>
           </div>
         </div>
-        <!-- Page body 1 -->
-        <?php if(empty($checklist_rows)){?>
-        <div class="page-body">
-          <div class="container-xl d-flex flex-column justify-content-center">
-            <div class="empty">
-              <div class="empty-img"><img src="./static/illustrations/undraw_printing_invoices_5r4r.svg" height="128" alt="">
-              </div>
-              <p class="empty-title">No checklists found</p>
-              <p class="empty-subtitle text-secondary">
-                Try adjusting your search or filter to find what you're looking for.
-              </p>
-              <div class="empty-action">
-                  <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-report">
-                  <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                  Add your first checklist
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Page body 1 -->
-        <?php }else{?>
-
-        <script src="js/jquery-3.7.1.js"></script> 
-        <script src="js/dataTables.js"></script>  
-        <script src="js/dataTables.bootstrap5.js"></script> 
-        <link href="css/vservesafe.min.css?1695847769" rel="stylesheet"/>
-        <link href="css/dataTables.bootstrap5.css" defer></script>
-        <script src="js/dataShecup.js"></script>  
-
-
-        <style>
-
-          .form-select-sm{
-            /* padding:5px; */
-            font-size:0.95rem;
-            /* all: unset; */
-            border-radius:4px;
-
-          }
-          .dt-length, .dt-search{
-            display: flex !important;
-            padding-bottom:15px;
-          }
-          .dt-length > label:nth-child(2) {
-            /* color: red; */
-            white-space: nowrap;
-            margin-left:15px;
-          }
-
-          #dt-search-0{
-            margin-left:10px;
-            font-size: 0.975rem;
-            border-radius:4px;
-          }
-
-          </style> 
-
 
         <!-- Page body 2 -->
         <div class="page-body">
           <div class="container-xl d-flex flex-column justify-content-center">
-            <div class="card">
-              <div class="card-header">
-                  <h3 class="card-title">My checklist</h3>
-              </div>
-              <div class="card-body">
-                <table id="example" class="table">
-                  <thead>
-                      <tr>
-                          <th>Referance ID</th>
-                          <th>Audit Date</th>
-                          <th>Audit Type</th>
-                          <th>Auditor Name</th>
-                          <th>Achievement(%)</th>
-                          <th>Score</th>
-                          <th>Point</th>
-                          <th>Answer</th>
-                          <th>N/A</th>
-                      </tr>
-                  </thead>
-                </table>
-              </div>
-            </div>
+          <div class="card-body">
+
+<div class="row row-cards">
+<div class="col-md-4">
+<div class="card">
+<div class="card-body">
+  <div class="subheader">Percentage Achievement</div>
+  <div class="h3 m-0" style="font-size:27px;">
+  </div>
+</div>
+</div>
+</div>
+<div class="col-md-2">
+<div class="card">
+<div class="card-body">
+  <div class="subheader">Total Score</div>
+  <div class="h3 m-0" style="font-size:27px;"></div>
+</div>
+</div>
+</div>
+<div class="col-md-2">
+<div class="card">
+<div class="card-body">
+  <div class="subheader">Total Point</div>
+  <div class="h3 m-0" style="font-size:27px;"></div>
+</div>
+</div>
+</div>
+<div class="col-md-2">
+<div class="card">
+<div class="card-body">
+  <div class="subheader">Total Answer</div>
+  <div class="h3 m-0" style="font-size:27px;">
+
+
+
+  </div>
+</div>
+</div>
+</div>
+<div class="col-md-2">
+<div class="card">
+<div class="card-body">
+  <div class="subheader">Total N/A</div>
+  <div class="h3 m-0" style="font-size:27px;">
+  </div>
+</div>
+</div>
+</div>
+
+
+
+
+<div class="col-lg-4 d-none d-md-block d-lg-block">
+<div class="card">
+<div class="card-header bg-primary text-purple-fg">
+  <h3 class="card-title " style="font-size:19px;">Verification Section</h3>
+</div>
+<div class="card-body">
+  <!-- <h3 class="card-title">Section</h3> -->
+  <ul class="steps steps-counter steps-vertical">
+
+    <?php echo $list_step;?>
+    <!-- <li class="step-item">Step one</li>
+    <li class="step-item">Step two</li>
+    <li class="step-item active">Step three</li>
+    <li class="step-item">Step four</li>
+    <li class="step-item">Step five</li>
+    <li class="step-item">Step one</li>
+    <li class="step-item">Step two</li>
+    <li class="step-item active">Step three</li>
+    <li class="step-item">Step four</li>
+    <li class="step-item">Step five</li>
+    <li class="step-item">Step one</li>
+    <li class="step-item">Step two</li>
+    <li class="step-item active">Step three</li>
+    <li class="step-item">Step four</li>
+    <li class="step-item">Step five</li>
+    <li class="step-item">Step one</li>
+    <li class="step-item">Step two</li>
+    <li class="step-item active">Step three</li>
+    <li class="step-item">Step four</li>
+    <li class="step-item">Step five</li> -->
+  </ul>
+</div>
+</div>
+</div>
+
+
+<div class="col-lg-8" style="margin-bottom:60px">
+
+
+<div class="card">
+<form action="" method="post" class="card" >
+<div class="card-header bg-purple text-purple-fg">
+  <h3 class="card-title " style="font-size:19px;"><?php echo $section[0]['question_no'].". ".$section[0]['question'];?></h3>
+</div>
+<div class="card-body">
+
+
+
+
+
+
+
+  <?php echo $list_question;?>
+
+
+
+
+
+
+
+</div>
+<div class="card-footer text-center">
+  <!-- <input type="submit" value="Submit"> -->
+  <!-- <button class="btn btn-primary" type="submit">Submit</button> -->
+  <button class="btn btn-primary" type="submit">Submit</button>
+</div>
+</form> 
+</div>
+
+
+</div>
+
+</div>
+
+
+  </div>
           </div>
         </div>
         <!-- Page body 2 -->
-        <?php }?>
-
-
 
         <footer class="footer footer-transparent d-print-none">
           <div class="container-xl">
