@@ -101,7 +101,7 @@ class Shecup
     }
 
 
-    function getAllSection($lang="th", $checklist_id ) {
+    function getAllSection($lang, $checklist_id) {
 
         $query = "SELECT shecup_fsms_question.question, shecup_fsms_question.question_no, shecup_fsms_answers.section_id 
                     FROM shecup_fsms_question  

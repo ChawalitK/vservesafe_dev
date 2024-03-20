@@ -82,7 +82,7 @@ foreach ($question as $k => $v) {
                               <input type="hidden" id="q['.$question[$k]["question_no"].']" name="q[]" value="'.$question[$k]["question_no"].'">
                               <input type="hidden" name="score['.$question[$k]["question_no"].']" value="'.$question[$k]["score"].'" >
                               <label class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="a['.$question[$k]['question_no'].']" value="N/A"/>
+                                <input class="form-check-input" type="radio" name="a['.$question[$k]['question_no'].']" value="N/A" checked/>
                                 <span class="form-check-label">N/A</span>
                               </label>
                               <label class="form-check form-check-inline">

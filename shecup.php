@@ -153,7 +153,7 @@ $checklist_rows = $shecup->getChecklistById($_SESSION['user_id']);
           <div class="container-xl d-flex flex-column justify-content-center">
             <div class="card">
               <div class="card-header">
-                  <h3 class="card-title">My checklist</h3>
+                  <h3 class="card-title">My Checklist</h3>
               </div>
               <div class="card-body">
                 <table id="example" class="table">
