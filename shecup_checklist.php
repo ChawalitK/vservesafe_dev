@@ -9,10 +9,7 @@ require_once("classes/Shecup.php");
 
 $shecup = new Shecup();
 
-$_SESSION['checklist_id'] = 20240032;
 $_SESSION['lang'] = 'th';
-$_SESSION['firstname'] = 'อ๋อง';
-$_SESSION['lastname'] = 'ทดสอบ';
 
 if(isset($_POST['q']) && count($_POST['q'])>0){
    $answerx =  $shecup->addAnswer($_POST, $_SESSION['checklist_id']);

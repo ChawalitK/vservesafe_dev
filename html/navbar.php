@@ -133,10 +133,10 @@
               </a>
               <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                 <a href="#" class="dropdown-item">Status</a>
-                <a href="./profile.html" class="dropdown-item">Profile</a>
+                <a href="#" class="dropdown-item">Profile</a>
                 <a href="#" class="dropdown-item">Feedback</a>
                 <div class="dropdown-divider"></div>
-                <a href="./settings.html" class="dropdown-item">Settings</a>
+                <a href="#" class="dropdown-item">Settings</a>
                 <a href="logout.php" class="dropdown-item">Logout</a>
               </div>
             </div>
@@ -145,7 +145,7 @@
             <div class="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center">
               <ul class="navbar-nav">
               <li class="nav-item">
-                  <a class="nav-link" href="home.php">
+                  <a class="nav-link" href="#">
                     <span class="nav-link-icon d-md-none d-lg-inline-block">
                       <!-- Download SVG icon from http://tabler-icons.io/i/home -->
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -171,7 +171,7 @@
                     </span>
                   </a>
                   <div class="dropdown-menu">
-                    <a class="dropdown-item" href="https://tabler.io/docs" target="_blank" rel="noopener">
+                    <a class="dropdown-item" href="#" target="_blank" rel="noopener">
                       Food Examination Form
                     </a>
                     <a class="dropdown-item" href="changelog.html">
@@ -192,16 +192,16 @@
                     </span>
                   </a>
                   <div class="dropdown-menu">
-                    <a class="dropdown-item" href="shedein_food_safety_management.php" rel="noopener">
+                    <a class="dropdown-item" href="#" rel="noopener">
                       Food Safety Management
                     </a>
-                    <a class="dropdown-item" href="changelog.html">
+                    <a class="dropdown-item" href="#">
                       Occupational Health &amp; Safety
                     </a>
-                    <a class="dropdown-item" href="https://github.com/tabler/tabler" target="_blank" rel="noopener">
+                    <a class="dropdown-item" href="#" target="_blank" rel="noopener">
                       Environment &amp; Sustainability
                     </a>
-                    <a class="dropdown-item" href="https://github.com/sponsors/codecalm" target="_blank" rel="noopener">
+                    <a class="dropdown-item" href="#" target="_blank" rel="noopener">
                       Decision Intelligence
                     </a>
                   </div>
@@ -239,13 +239,13 @@
                     </span>
                   </a>
                   <div class="dropdown-menu">
-                    <a class="dropdown-item" href="https://tabler.io/docs" target="_blank" rel="noopener">
+                    <a class="dropdown-item" href="#" target="_blank" rel="noopener">
                       Documentation
                     </a>
-                    <a class="dropdown-item" href="changelog.html">
+                    <a class="dropdown-item" href="#">
                       Changelog
                     </a>
-                    <a class="dropdown-item" href="https://github.com/tabler/tabler" target="_blank" rel="noopener">
+                    <a class="dropdown-item" href="#" target="_blank" rel="noopener">
                       Source code
                     </a>
                     <a class="dropdown-item text-pink" href="https://github.com/sponsors/codecalm" target="_blank" rel="noopener">

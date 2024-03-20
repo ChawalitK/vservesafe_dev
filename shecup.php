@@ -168,6 +168,7 @@ $checklist_rows = $shecup->getChecklistById($_SESSION['user_id']);
                           <th>Point</th>
                           <th>Answer</th>
                           <th>N/A</th>
+                          <th>Action</th>
                       </tr>
                   </thead>
                 </table>

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.0.3
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Mar 18, 2024 at 07:34 PM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 7.4.29
+-- Host: 127.0.0.1
+-- Generation Time: Mar 20, 2024 at 09:07 AM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -189,17 +189,19 @@ CREATE TABLE `profiles` (
   `profile_firstname` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `profile_lastname` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
   `profile_lang` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `profile_created` datetime DEFAULT current_timestamp()
+  `profile_avatar` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `profile_created` datetime DEFAULT current_timestamp(),
+  `profile_updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `profiles`
 --
 
-INSERT INTO `profiles` (`profile_id`, `site_id`, `user_id`, `profile_firstname`, `profile_lastname`, `profile_lang`, `profile_created`) VALUES
-(1, 1, 1, 'Chawalit', 'Kiatmanaroj', 'en', '2024-01-23 22:51:58'),
-(2, 2, 2, 'Sasikarn', 'Jongsook', 'en', '2024-01-23 22:55:38'),
-(3, 3, 3, '帕特博士', 'Dansai', 'en', '2024-01-24 20:19:50');
+INSERT INTO `profiles` (`profile_id`, `site_id`, `user_id`, `profile_firstname`, `profile_lastname`, `profile_lang`, `profile_avatar`, `profile_created`, `profile_updated`) VALUES
+(1, 1, 1, 'Chawalit', 'Kiatmanaroj', 'en', 'ong.jpg', '2024-01-23 22:51:58', '2024-03-20 03:21:43'),
+(2, 2, 2, 'Sasikarn', 'Jongsook', 'en', 'oum.jpg', '2024-01-23 22:55:38', '2024-03-20 03:21:43'),
+(3, 3, 3, 'Dr.Patt', 'Dansai', 'en', 'patt.jpg', '2024-01-24 20:19:50', '2024-03-20 03:22:40');
 
 -- --------------------------------------------------------
 
@@ -315,6 +317,62 @@ CREATE TABLE `shecup_fsms_answers` (
 --
 
 INSERT INTO `shecup_fsms_answers` (`id`, `company_id`, `audit_id`, `section_id`, `question_no`, `score`, `point`, `compliance_status`, `finding`, `standard`, `root_cause`, `correction`, `corrective_action`, `created`, `updated`) VALUES
+(5, 1, 1111, '1', '1.1', 5, 5, 'Compliance', NULL, NULL, NULL, NULL, NULL, '2024-03-19 16:45:56', '2024-03-19 16:45:56'),
+(36, 1, 20240029, '1', '1.1', 5, 5, 'Compliance', '', NULL, NULL, NULL, NULL, '2024-03-20 07:50:46', '2024-03-20 07:50:46'),
+(37, 1, 20240029, '1', '1.2', 3, 3, 'Compliance', '', NULL, NULL, NULL, NULL, '2024-03-20 07:50:46', '2024-03-20 07:50:46'),
+(6, 1, 20240032, '1', '1.1', 5, 5, 'Compliance', '', NULL, NULL, NULL, NULL, '2024-03-19 16:46:30', '2024-03-19 16:46:30'),
+(7, 1, 20240032, '1', '1.2', 3, 3, 'Compliance', '', NULL, NULL, NULL, NULL, '2024-03-19 16:46:30', '2024-03-19 16:46:30'),
+(8, 1, 20240032, '2', '2.1', 3, 3, 'Compliance', '', NULL, NULL, NULL, NULL, '2024-03-19 16:47:22', '2024-03-19 16:47:22'),
+(9, 1, 20240032, '2', '2.2', 3, 3, 'Compliance', '', NULL, NULL, NULL, NULL, '2024-03-19 16:47:22', '2024-03-19 16:47:22'),
+(10, 1, 20240032, '2', '2.3', 1, 1, 'Compliance', '', NULL, NULL, NULL, NULL, '2024-03-19 16:47:22', '2024-03-19 16:47:22'),
+(11, 1, 20240032, '2', '2.4', 1, 1, 'Compliance', '', NULL, NULL, NULL, NULL, '2024-03-19 16:47:22', '2024-03-19 16:47:22'),
+(12, 1, 20240032, '2', '2.5', 5, 5, 'Compliance', '', NULL, NULL, NULL, NULL, '2024-03-19 16:47:22', '2024-03-19 16:47:22'),
+(18, 1, 20240032, '3', '3.1', 3, 3, 'Compliance', '', NULL, NULL, NULL, NULL, '2024-03-19 17:13:57', '2024-03-19 17:13:57'),
+(19, 1, 20240032, '3', '3.2', 3, 3, 'Compliance', '', NULL, NULL, NULL, NULL, '2024-03-19 17:13:57', '2024-03-19 17:13:57'),
+(20, 1, 20240032, '3', '3.3', 3, 3, 'Compliance', '', NULL, NULL, NULL, NULL, '2024-03-19 17:13:57', '2024-03-19 17:13:57'),
+(21, 1, 20240032, '3', '3.4', 3, 3, 'Compliance', '', NULL, NULL, NULL, NULL, '2024-03-19 17:13:57', '2024-03-19 17:13:57'),
+(22, 1, 20240032, '3', '3.5', 5, 5, 'Compliance', '', NULL, NULL, NULL, NULL, '2024-03-19 17:13:57', '2024-03-19 17:13:57'),
+(23, 1, 20240032, '3', '3.6', 1, 1, 'Compliance', '', NULL, NULL, NULL, NULL, '2024-03-19 17:13:57', '2024-03-19 17:13:57'),
+(24, 1, 20240032, '4', '4.1', 3, 3, 'Compliance', '', NULL, NULL, NULL, NULL, '2024-03-19 17:14:21', '2024-03-19 17:14:21'),
+(25, 1, 20240032, '4', '4.2', 3, 3, 'Compliance', '', NULL, NULL, NULL, NULL, '2024-03-19 17:14:21', '2024-03-19 17:14:21'),
+(26, 1, 20240032, '4', '4.3', 1, 1, 'Compliance', '', NULL, NULL, NULL, NULL, '2024-03-19 17:14:21', '2024-03-19 17:14:21'),
+(27, 1, 20240032, '4', '4.4', 5, 5, 'Compliance', '', NULL, NULL, NULL, NULL, '2024-03-19 17:14:21', '2024-03-19 17:14:21'),
+(28, 1, 20240032, '4', '4.5', 5, 5, 'Compliance', '', NULL, NULL, NULL, NULL, '2024-03-19 17:14:21', '2024-03-19 17:14:21'),
+(29, 1, 20240032, '4', '4.6', 3, 3, 'Compliance', '', NULL, NULL, NULL, NULL, '2024-03-19 17:14:21', '2024-03-19 17:14:21'),
+(30, 1, 20240032, '5', '5.1', 3, 3, 'Compliance', '', NULL, NULL, NULL, NULL, '2024-03-19 17:15:30', '2024-03-19 17:15:30'),
+(31, 1, 20240032, '5', '5.2', 3, 3, 'Compliance', '', NULL, NULL, NULL, NULL, '2024-03-19 17:15:30', '2024-03-19 17:15:30'),
+(32, 1, 20240032, '6', '6.1', 5, 5, 'Compliance', '', NULL, NULL, NULL, NULL, '2024-03-19 17:15:52', '2024-03-19 17:15:52'),
+(33, 1, 20240032, '6', '6.2', 1, 1, 'Compliance', '', NULL, NULL, NULL, NULL, '2024-03-19 17:15:52', '2024-03-19 17:15:52');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shecup_fsms_answers.old`
+--
+
+CREATE TABLE `shecup_fsms_answers.old` (
+  `id` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  `audit_id` int(11) NOT NULL,
+  `section_id` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `question_no` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `score` int(3) DEFAULT NULL,
+  `point` int(3) NOT NULL,
+  `compliance_status` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `finding` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `standard` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `root_cause` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `correction` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `corrective_action` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `shecup_fsms_answers.old`
+--
+
+INSERT INTO `shecup_fsms_answers.old` (`id`, `company_id`, `audit_id`, `section_id`, `question_no`, `score`, `point`, `compliance_status`, `finding`, `standard`, `root_cause`, `correction`, `corrective_action`, `created`, `updated`) VALUES
 (1, 1, 1, '1', '1.1', 5, 5, 'Compliance', '', NULL, NULL, NULL, NULL, '2024-03-06 13:44:56', '2024-03-06 13:44:56'),
 (2, 1, 1, '1', '1.2', 3, 0, 'Non Compliance', '', NULL, NULL, NULL, NULL, '2024-03-06 13:44:56', '2024-03-06 13:44:56'),
 (9, 1, 5, '1', '1.1', 5, 5, 'Compliance', '', NULL, NULL, NULL, NULL, '2024-03-13 11:44:47', '2024-03-13 11:44:47'),
@@ -406,19 +464,6 @@ INSERT INTO `shecup_fsms_answers` (`id`, `company_id`, `audit_id`, `section_id`,
 (95, 1, 10, '3', '3.5', 5, 5, 'Compliance', '', NULL, NULL, NULL, NULL, '2024-03-13 13:25:35', '2024-03-13 13:25:35'),
 (96, 1, 10, '3', '3.6', 1, 0, 'Non Compliance', '', NULL, NULL, NULL, NULL, '2024-03-13 13:25:35', '2024-03-13 13:25:35');
 
---
--- Triggers `shecup_fsms_answers`
---
-DELIMITER $$
-CREATE TRIGGER `after_insert_shecup_fsms_answers` AFTER INSERT ON `shecup_fsms_answers` FOR EACH ROW update shecup_fsms_audit 
- set total_score = (select sum(score) from shecup_fsms_answers where audit_id = new.audit_id and compliance_status != 'N/A'),
- total_point = (select sum(point) from shecup_fsms_answers where audit_id = new.audit_id and compliance_status != 'N/A'),
-  total_answer = (select count(id) from shecup_fsms_answers where audit_id = new.audit_id and compliance_status != 'N/A'),
-  total_na = (select count(id) from shecup_fsms_answers where audit_id = new.audit_id and compliance_status = 'N/A') 
-where id = new.audit_id
-$$
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
@@ -426,13 +471,14 @@ DELIMITER ;
 --
 
 CREATE TABLE `shecup_fsms_audit` (
-  `id` int(11) NOT NULL,
+  `audit_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `site_id` int(11) NOT NULL,
-  `audit_referance` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `audit_referance` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `audit_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `audit_type` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `audit_name` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `achievement` decimal(6,2) NOT NULL DEFAULT 0.00,
   `total_score` decimal(6,2) NOT NULL DEFAULT 0.00,
   `total_point` decimal(6,2) NOT NULL DEFAULT 0.00,
   `total_answer` int(3) NOT NULL DEFAULT 0,
@@ -446,18 +492,17 @@ CREATE TABLE `shecup_fsms_audit` (
 -- Dumping data for table `shecup_fsms_audit`
 --
 
-INSERT INTO `shecup_fsms_audit` (`id`, `user_id`, `site_id`, `audit_referance`, `audit_date`, `audit_type`, `audit_name`, `total_score`, `total_point`, `total_answer`, `total_na`, `additional`, `audit_created`, `audit_updated`) VALUES
-(1, 0, 1, '', '2024-03-12 18:21:20', '', 'Sasikarn Jongsook', '8.00', '5.00', 0, 0, NULL, '2024-03-04 16:02:05', '2024-03-13 11:51:47'),
-(2, 0, 1, '', '2024-03-12 18:21:20', '', 'Albert Einstein', '0.00', '0.00', 0, 0, NULL, '2024-03-04 16:02:05', '2024-03-13 11:51:49'),
-(3, 0, 1, '', '2024-03-11 18:37:37', 'internal', 'Sasikarn Jongsook', '0.00', '0.00', 0, 0, 'cdcdscdscds', '2024-03-12 18:37:37', '2024-03-13 11:51:53'),
-(4, 0, 1, '', '2024-03-13 11:36:57', 'internal', 'Sasikarn Jongsook', '0.00', '0.00', 0, 0, 'ทดสอบ 2', '2024-03-13 11:36:57', '2024-03-13 11:51:57'),
-(5, 0, 1, '', '2024-03-13 11:41:46', 'internal', 'Sasikarn Jongsook', '8.00', '8.00', 0, 0, 'xxx', '2024-03-13 11:41:46', '2024-03-13 11:52:01'),
-(6, 0, 1, '', '2024-03-13 11:48:41', 'Internal', 'Sasikarn Jongsook', '0.00', '0.00', 0, 0, 'test5', '2024-03-13 11:48:41', '2024-03-13 11:52:05'),
-(7, 0, 1, '', '2024-03-13 11:58:50', 'Internal', 'Sasikarn Jongsook', '59.00', '46.00', 19, 2, 'cdcdcdcd', '2024-03-13 11:58:50', '2024-03-13 12:01:51'),
-(8, 0, 1, '', '2024-03-13 12:06:49', 'Internal', 'Chawalit Kiatmanaroj', '19.00', '16.00', 21, 14, 'ทดสอบอ๋อง', '2024-03-13 12:06:49', '2024-03-13 12:13:01'),
-(9, 0, 1, '', '2024-03-13 12:13:47', 'Internal', 'Chawalit Kiatmanaroj', '64.00', '58.00', 20, 13, 'ทดสอบ cccccc', '2024-03-13 12:13:47', '2024-03-13 12:19:42'),
-(10, 0, 1, '', '2024-03-13 13:24:20', 'Internal', 'Sasikarn Jongsook', '33.00', '26.00', 11, 2, 'test555', '2024-03-13 13:24:20', '2024-03-13 13:25:35'),
-(11, 0, 1, '', '2024-03-13 13:46:20', 'Internal', 'Sasikarn Jongsook', '0.00', '0.00', 0, 0, 'cdcdcd', '2024-03-13 13:46:20', '2024-03-13 13:46:20');
+INSERT INTO `shecup_fsms_audit` (`audit_id`, `user_id`, `site_id`, `audit_referance`, `audit_date`, `audit_type`, `audit_name`, `achievement`, `total_score`, `total_point`, `total_answer`, `total_na`, `additional`, `audit_created`, `audit_updated`) VALUES
+(20240027, 1, 1, 'SHU-20240027', '2024-03-19 14:09:57', 'Internal', 'Chawalit Kiatmanaroj', '0.00', '0.00', '0.00', 0, 0, 'AMARI PATTAYA', '2024-03-19 14:09:57', '2024-03-19 14:09:57'),
+(20240028, 1, 1, 'SHU-20240028', '2024-03-19 14:18:07', 'Internal', 'Chawalit Kiatmanaroj', '0.00', '0.00', '0.00', 0, 0, 'AMARI PATTAYA', '2024-03-19 14:18:07', '2024-03-19 14:18:07'),
+(20240029, 3, 3, 'SHU-20240029', '2024-03-19 15:01:40', 'External', '帕特博士 Dansai', '0.00', '0.00', '0.00', 0, 0, '', '2024-03-19 15:01:40', '2024-03-19 15:01:40'),
+(20240030, 3, 3, 'SHU-20240030', '2024-03-19 15:09:44', 'External', '帕特博士 Dansai', '0.00', '0.00', '0.00', 0, 0, '', '2024-03-19 15:09:44', '2024-03-19 15:09:44'),
+(20240031, 3, 3, 'SHU-20240031', '2024-03-19 15:13:32', 'External', '帕特博士 Dansai', '0.00', '0.00', '0.00', 0, 0, '', '2024-03-19 15:13:32', '2024-03-19 15:13:32'),
+(20240032, 2, 2, 'SHU-20240032', '2024-03-19 15:45:50', 'Internal', 'Sasikarn Jongsook', '0.00', '0.00', '0.00', 0, 0, '', '2024-03-19 15:45:50', '2024-03-19 15:45:50'),
+(20240033, 2, 2, 'SHU-20240033', '2024-03-19 15:47:20', 'Internal', 'Sasikarn Jongsook', '0.00', '0.00', '0.00', 0, 0, '', '2024-03-19 15:47:20', '2024-03-19 15:47:20'),
+(20240034, 2, 2, 'SHU-20240034', '2024-03-19 15:48:52', 'Internal', 'Sasikarn Jongsook', '0.00', '0.00', '0.00', 0, 0, 'sxxsxssxsxs', '2024-03-19 15:48:52', '2024-03-19 15:48:52'),
+(20240035, 2, 2, 'SHU-20240035', '2024-03-19 17:24:46', 'Internal', 'Sasikarn Jongsook', '0.00', '0.00', '0.00', 0, 0, 'dddddd', '2024-03-19 17:24:46', '2024-03-19 17:24:46'),
+(20240036, 2, 2, 'SHU-20240036', '2024-03-19 17:27:48', 'Internal', 'Sasikarn Jongsookxxx', '0.00', '0.00', '0.00', 0, 0, '', '2024-03-19 17:27:48', '2024-03-19 17:27:48');
 
 -- --------------------------------------------------------
 
@@ -776,9 +821,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `username`, `password`, `user_email`, `user_role`, `user_active`, `user_locked`, `user_updated`, `user_created`) VALUES
-(1, 'superong', '*04C7F5153E5A8E8AFF512D6EB0815B61A0151AB2', 'chawalit.ki@gmail.com', 'user', 'Y', 'N', '2024-03-18 13:29:51', '2024-01-23 15:25:15'),
-(2, 'penguinoum', '*04C7F5153E5A8E8AFF512D6EB0815B61A0151AB2', 'sasikarn.jongsook@hotmail.com', 'audit', 'Y', 'N', '2024-03-18 13:29:57', '2024-01-23 15:54:39'),
-(3, 'drpatt', '*E8BA89DE8C20DF8E3BB78B74708B474F63B9AA49', 'drpatt@hotmail.com', 'admin', 'Y', 'N', '2024-03-18 13:30:01', '2024-01-24 13:18:33');
+(1, 'superong', '*04C7F5153E5A8E8AFF512D6EB0815B61A0151AB2', 'chawalit.ki@gmail.com', 'Site user', 'Y', 'N', '2024-03-20 03:29:22', '2024-01-23 15:25:15'),
+(2, 'penguinoum', '*04C7F5153E5A8E8AFF512D6EB0815B61A0151AB2', 'sasikarn.jongsook@hotmail.com', 'Auditor', 'Y', 'N', '2024-03-20 03:28:31', '2024-01-23 15:54:39'),
+(3, 'drpatt', '*E8BA89DE8C20DF8E3BB78B74708B474F63B9AA49', 'drpatt@hotmail.com', 'Administrator', 'Y', 'N', '2024-03-20 03:29:10', '2024-01-24 13:18:33');
 
 --
 -- Indexes for dumped tables
@@ -855,10 +900,17 @@ ALTER TABLE `shecup_fsms_answers`
   ADD UNIQUE KEY `ans_idx` (`id`);
 
 --
+-- Indexes for table `shecup_fsms_answers.old`
+--
+ALTER TABLE `shecup_fsms_answers.old`
+  ADD PRIMARY KEY (`audit_id`,`question_no`),
+  ADD UNIQUE KEY `ans_idx` (`id`);
+
+--
 -- Indexes for table `shecup_fsms_audit`
 --
 ALTER TABLE `shecup_fsms_audit`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`audit_id`);
 
 --
 -- Indexes for table `shecup_fsms_question`
@@ -959,13 +1011,19 @@ ALTER TABLE `rel_users_profiles`
 -- AUTO_INCREMENT for table `shecup_fsms_answers`
 --
 ALTER TABLE `shecup_fsms_answers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+
+--
+-- AUTO_INCREMENT for table `shecup_fsms_answers.old`
+--
+ALTER TABLE `shecup_fsms_answers.old`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
 -- AUTO_INCREMENT for table `shecup_fsms_audit`
 --
 ALTER TABLE `shecup_fsms_audit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20240000;
+  MODIFY `audit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20240037;
 
 --
 -- AUTO_INCREMENT for table `shecup_fsms_question`
