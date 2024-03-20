@@ -27,7 +27,6 @@ if((isset($_POST['site_id'])) && (isset($_POST['audit_type']))){
   header('location:'.$_SERVER['PHP_SELF']);
 }
 
-
 $checklist_rows = $shecup->getChecklistById($_SESSION['user_id']);
 
 ?>
