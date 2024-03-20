@@ -120,7 +120,8 @@ $(document).ready(function() {
 		"serverSide": true,
 		"ajax": $.fn.dataTable.pipeline( {
 			url: 'data/server_processing.php',
-			pages: 5 // number of pages to cache
-		} )
+			pages: 5, // number of pages to cache
+		})
+		
 	} );
 } );

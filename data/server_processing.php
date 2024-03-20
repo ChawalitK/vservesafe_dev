@@ -4,7 +4,12 @@ $table = 'shecup_fsms_audit';
 $primaryKey = 'audit_id';
 
 $columns = array(
-	array( 'db' => 'audit_referance', 'dt' => 0 ),
+	array( 
+		'db' => 'audit_referance', 
+		'dt' => 0, 
+		'formatter' => function( $d, $row ) {
+				return '<a href="shecup_initial.php?cipher=' . base64_encode(base64_encode(base64_encode($d))) . '">' . $d . '</a>';
+		} ),
 	array(
 		'db'        => 'audit_date',
 		'dt'        => 1,
