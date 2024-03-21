@@ -225,6 +225,10 @@
                       FSMS Audit Verification 
                   </a>
 
+                  <a class="dropdown-item" href="#" rel="noopener">
+                      Smart Energy Monitoring 
+                  </a>
+
                   </div>
                   
                 </li>
